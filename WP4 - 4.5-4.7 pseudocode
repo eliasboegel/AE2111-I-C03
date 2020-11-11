@@ -1,6 +1,6 @@
 Hello test 1
 
-Function read_file: Reads the text file with forces/moment, plate thickness and fastener coordinates and diameter
+Function read_excel: Reads the text file with forces/moment, plate thickness and fastener coordinates and diameter
 	split into lines/data
 	put coordinates and diameters into a list
 	Output coordinate/diameter global list, and forces/moment global dictionary
@@ -32,3 +32,7 @@ Main:
 	for i in (list with fastener details)
 		total_force = in_plane_force + in_plane_moment
 		calculate bearing stress with total_force, fastener diameter
+
+
+
+*le me making a random change to test*
