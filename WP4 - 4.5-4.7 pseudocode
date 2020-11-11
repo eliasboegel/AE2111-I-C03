@@ -1,0 +1,34 @@
+Hello test 1
+
+Function read_file: Reads the text file with forces/moment, plate thickness and fastener coordinates and diameter
+	split into lines/data
+	put coordinates and diameters into a list
+	Output coordinate/diameter global list, and forces/moment global dictionary
+	
+
+Function calculate_cg: Calculate CG with formula
+	Takes list with fastener details
+	Uses formula
+	Outputs CG coordinates as tuple
+	
+
+Function calculate_equivalent_FM: Calculate equivalent force/moment through CG
+	Input forces/moment dictionary, and CG tuple
+	Use formulas, put equivalent forces and moment into tuple
+	
+
+Function in_plane_force: Calculate in plane forces from F_x/F_z
+	Input forces and number of fasteners
+	Output force
+	
+	
+Function in_plane_moment: Calculate in plane force from moment
+	Input moment, details for one fastener, CG coordinates
+	Calculate distance from CG for fastener
+	Output in plane force due to moment
+	
+	
+Main:
+	for i in (list with fastener details)
+		total_force = in_plane_force + in_plane_moment
+		calculate bearing stress with total_force, fastener diameter
