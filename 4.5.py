@@ -1,4 +1,5 @@
-print("Hello World")
+
+def read_excel(): #Working on this one -Saviër
 
 
 # For this function, I would like the forces F_x and F_z to have coordinates that I can use
