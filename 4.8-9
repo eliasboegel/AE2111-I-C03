@@ -19,3 +19,6 @@ print(A/B,Mx)
 #n_f is the number of fasteners
 n_f=
 Fp_Mz=n_f*(A/B)
+
+
+Halloooo
