@@ -1,5 +1,13 @@
 
-def read_excel(): #Working on this one -Saviër
+def read_excel(excel): #Working on this one -Saviër
+
+    # Read csv file for coordinates
+    df = pd.read_csv(excel, delimiter=',')
+
+    # Convert to seperate lists for X, Z, D
+    lists = [[row[col] for col in df.columns] for row in df.to_dict('records')]
+    
+
 
 
 # For this function, I would like the forces F_x and F_z to have coordinates that I can use
@@ -13,4 +21,4 @@ def in_plane_force(cg_forces_and_moments_dictionary, fastener_details_dictionary
     return { "F_in_plane_x": cg_forces_and_moments_dictionary["F_x"] / number_of_fasteners, "F_in_plane_z": cg_forces_and_moments_dictionary["F_z"] / number_of_fasteners}
 
 
-def in_plane_moment() # Working on this one -Kristian
+def in_plane_moment():# Working on this one -Kristian
