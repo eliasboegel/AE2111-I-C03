@@ -2,7 +2,7 @@ import numpy as np
 from math import sin, cos, atan2, pi
 
 
-TESTING_forces_and_moments_temporary_dictionary = {"F_x": 500, "M_y": 5, "F_z": 5, "coord_z": 0, "coord_x": 0}
+TESTING_forces_and_moments_temporary_dictionary = {"F_x": 5, "M_y": 5, "F_z": 5, "coord_z": 0, "coord_x": 0}
 TESTING_fasteners_list = [{"coord_x": 0, "coord_z": 0, "diameter": 1}, {"coord_x": 2, "coord_z": 2, "diameter": 2}, {"coord_x": 4, "coord_z": 2, "diameter": 1}, {"coord_x": 5, "coord_z": 4, "diameter": 4}, {"coord_x": 0, "coord_z": 1, "diameter": 6}, {"coord_x": 2, "coord_z": 3, "diameter": 4}]
 TESTING_stress_allowable = 20
 TESTING_t2 = 2
@@ -66,7 +66,6 @@ def CG_calculator(fastener_details_list): # I changed it slightly to take in the
 
 
 def calculate_equivalent_FM(forces_and_moments_dictionary, CG_coordinates): # Working on this one -Kristian
-    #The forces in the x- and z-directions will just be the forces
     return { "F_cgx": forces_and_moments_dictionary["F_x"], "F_cgz": forces_and_moments_dictionary["F_z"], "M_cgy": forces_and_moments_dictionary["M_y"] + forces_and_moments_dictionary["F_x"] * (forces_and_moments_dictionary["coord_z"] - CG_coordinates[1])  - forces_and_moments_dictionary["F_z"] * (forces_and_moments_dictionary["coord_x"] - CG_coordinates[0])}
 
 
