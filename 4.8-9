@@ -12,12 +12,26 @@ theta=120
 Fz_tot=F_tot*sin(theta)
 Ai=20
 Mx=(Fz_tot*d)
+
+#n_f is the number of fasteners
+n_f = 4 
+
+Sum_Ai_r^2 = 0
+Sum_Ai_r = 0
+
+Ar = Ai * r
+Ar^2 = Ai * r**2
+for k in range(n_f)
+  Sum_Ai_r = Sum_Ai_r + Ar
+  
+for h in range(n_f)
+  Sum_Ai_r^2 = Sum_Ai_r^2 + Ar^2
+
 A = Mx*Ai*(int(r))
 B = Ai*(int(r))**2
 print(A/B,Mx)
 
-#n_f is the number of fasteners
-n_f=
+
 Fp_Mz=n_f*(A/B)
 
 
