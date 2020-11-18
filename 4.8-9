@@ -1,0 +1,21 @@
+from math import sin, cos
+# F_tot is the total applied force to the fastener pattern 
+# centre of gravity to the F_tot original location
+# x_n is the fastener number (i.e fastener 2 -> x_n=2)
+
+# Input for radial distance for fastener cg to ith fastener
+r=input('Please enter radial distance to fastener in question: ')
+# d is the distance between the attachment point and the fastener cg
+d=1
+F_tot=150
+theta=120
+Fz_tot=F_tot*sin(theta)
+Ai=20
+Mx=(Fz_tot*d)
+A = Mx*Ai*(int(r))
+B = Ai*(int(r))**2
+print(A/B,Mx)
+
+#n_f is the number of fasteners
+n_f=
+Fp_Mz=n_f*(A/B)
