@@ -1,14 +1,14 @@
 from math import pi
 
 #calculating the normal stress
-D_fo = 4
-D_fi = 2
+D_fo = 4 #outer diameter
+D_fi = 2 #inner diameter
 r_fo = D_fo / 2
 r_fi = D_fi / 2
 
 F_y = 4 # pull-through load
 
-A = pi * ( r_fo**2 - r_fi**2 )
+A = pi * ( r_fo**2 - r_fi**2 ) #area of the fastener head on the attached parts
 
 stress_N = F_y / A
 
