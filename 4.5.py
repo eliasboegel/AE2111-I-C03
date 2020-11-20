@@ -1,11 +1,16 @@
 import numpy as np
 from math import sin, cos, atan2, pi
+from dimensions import *
 
 
 TESTING_forces_and_moments_temporary_dictionary = {"F_x": 500, "M_y": 5, "F_z": 5, "coord_z": 0, "coord_x": 0}
 TESTING_fasteners_list = [{"coord_x": 0, "coord_z": 0, "diameter": 1}, {"coord_x": 2, "coord_z": 2, "diameter": 2}, {"coord_x": 4, "coord_z": 2, "diameter": 1}, {"coord_x": 5, "coord_z": 4, "diameter": 4}, {"coord_x": 0, "coord_z": 1, "diameter": 6}, {"coord_x": 2, "coord_z": 3, "diameter": 4}]
 TESTING_stress_allowable = 20
 TESTING_t2 = 2
+
+info_fastener = {"E": 2, "diameter": 0.01, "alpha": 0.05} # Fill in with actual values
+alpha_clamped_part = 0.08 
+phi = 0 
 
 
 def CG_calculator(fastener_details_list): # I changed it slightly to take in the data in another form, and into a function
@@ -88,10 +93,79 @@ def in_plane_moment(M_cgy, all_fastener_details_list, CG_coordinates, current_fa
 """Bearing stress calculator"""
 
 
-def bearing_stress_calculator(in_plane_forces_dictionary, current_fastener_details_dictionary, t2):
-    Pi = (in_plane_forces_dictionary["F_in_plane_x"]**2+in_plane_forces_dictionary["F_in_plane_z"]**2)**(1/2)
+def bearing_stress_calculator(in_plane_forces_dictionary, current_fastener_details_dictionary, t2, F_T):
+    Pi = (in_plane_forces_dictionary["F_in_plane_x"]**2+in_plane_forces_dictionary["F_in_plane_z"]**2)**(1/2) + F_T
     B_stress = Pi/(current_fastener_details_dictionary["diameter"]*t2)
     return B_stress
+
+
+""" Thermal intensity values """
+
+#Earth
+J_searth = 1371.3
+J_aearth = 307.4
+J_irearth  = 239.7
+
+#Jupiter
+J_sjupiter = 52.7
+J_ajupiter = 21.1
+J_irjupiter = 8.2
+
+
+""" absorptivity and emissivity values dependent on material """
+alpha = 0.15 #absorptivity
+epsilon = 0.05 #emmisvity
+sigma = 5.67*10**(-8)
+
+
+""" emitting and projected area of lug """
+#calculations of the area
+A_side = t2 * w + w * (l-0.5*D1) + (pi*(0.5*w)**2)-(pi*(D1*0.5)**2)
+
+A_neg_solararray = 2 * (w * t1) + (h*w)*3 - 4*pi*(0.5*D2)**2 #done
+
+A_top_bottom = ((3*(h*t2)+2*t1*t2)+l*t1*2)*2
+
+
+A_total = 2*A_side + A_neg_solararray + A_top_bottom
+
+
+A_i = A_side  #projected area
+A_e = A_total  #emitting area
+
+
+"""" Calculations of Q_absorbed """
+
+#Q_absorbed = alpha * J_s * A_i + alpha * J_a * A_i + epsilon * J_ir * A_i
+
+#for earth
+Q_absorbed_earth = alpha * J_searth * A_i + alpha * J_aearth * A_i + epsilon * J_irearth * A_i
+
+#for Jupiter
+Q_absorbed_jupiter = alpha*J_sjupiter*A_i + alpha*J_ajupiter*A_i + epsilon*J_irjupiter*A_i
+
+if Q_absorbed_earth > Q_absorbed_jupiter:
+    Q_absorbed_max = Q_absorbed_earth
+    Q_absorbed_min = Q_absorbed_jupiter
+
+elif Q_absorbed_earth < Q_absorbed_jupiter:
+    Q_absorbed_max = Q_absorbed_jupiter
+    Q_absorbed_min = Q_absorbed_earth
+
+""" Calculations for min and max equilibrium temperature"""
+#T = (Q_absorbed/(epsilon*sigma*A_e))^(1/4)
+#min equilibrium temperature
+T_eqmin = (Q_absorbed_min/(epsilon*sigma*A_e))**(1/4)
+#max equilibrium temperature
+T_eqmax = (Q_absorbed_max/ (epsilon*sigma*A_e))**(1/4)
+
+# print(T_eqmin, "[K]" , T_eqmax, "[K]")
+
+
+temperatures = {"reference": 288.15, "min": T_eqmin, "max": T_eqmax} 
+
+F_T_max = (alpha_clamped_part - info_fastener["alpha"]) * (temperatures["max"] - temperatures["reference"]) * info_fastener["E"] * info_fastener["diameter"] ** 2 / 4 * (1 - phi)
+F_T_min = (alpha_clamped_part - info_fastener["alpha"]) * (temperatures["min"] - temperatures["reference"]) * info_fastener["E"] * info_fastener["diameter"] ** 2 / 4 * (1 - phi)
 
 
 TESTING_CG = CG_calculator(TESTING_fasteners_list)
@@ -101,17 +175,19 @@ TESTING_fastener_counter = 0
 for i in TESTING_fasteners_list:
     current_fastener_in_plane_moment = in_plane_moment(TESTING_equivalent_CG_FM["M_cgy"], TESTING_fasteners_list, TESTING_CG, TESTING_fastener_counter)
     current_fastener__total_in_plane_forces = {"F_in_plane_x": TESTING_common_in_plane_forces["F_in_plane_x"] + current_fastener_in_plane_moment["F_in_plane_x"], "F_in_plane_z": TESTING_common_in_plane_forces["F_in_plane_z"] + current_fastener_in_plane_moment["F_in_plane_z"]}
-    bearing_stress = bearing_stress_calculator(current_fastener__total_in_plane_forces, i, TESTING_t2)
+    bearing_stress_Tref = bearing_stress_calculator(current_fastener__total_in_plane_forces, i, TESTING_t2, 0)
+    bearing_stress_Tmin = bearing_stress_calculator(current_fastener__total_in_plane_forces, i, TESTING_t2, F_T_min)
+    bearing_stress_Tmax = bearing_stress_calculator(current_fastener__total_in_plane_forces, i, TESTING_t2, F_T_max) 
 
-    print("The bearing stress for fastener number", TESTING_fastener_counter+1, "is:", bearing_stress, "\nThe max allowable stress is:", TESTING_stress_allowable, "\n")
+    print("The bearing stress for fastener number", TESTING_fastener_counter+1, "is:", bearing_stress_Tmin, "-", bearing_stress_Tmax, "\nThe max allowable stress is:", TESTING_stress_allowable, "\n")
     #Check if bearing stress does not exceed allowable stress
-    if bearing_stress < TESTING_stress_allowable:
-        print("No failure due to bearing stress\nTry to save weight by reducing t2 or removing fasteners\n\n")
+    if bearing_stress_Tmax < TESTING_stress_allowable:
+        print("No failure due to bearing stress at any temperature.\nTry to save weight by reducing t2 or removing fasteners\n\n")
 
-    elif bearing_stress == TESTING_stress_allowable:
+    elif bearing_stress_Tmax == TESTING_stress_allowable:
         print("Bearing stress is equal to allowable stress\n\n")
 
-    elif bearing_stress > TESTING_stress_allowable:
+    elif bearing_stress_Tmax > TESTING_stress_allowable:
         print("Failure occurs due to bearing stress. Please change one of the following geometries:")
         print("D2\nt2\nnumber of fasteners\nNote, w might change due to this\n\n")
 

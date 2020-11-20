@@ -8,6 +8,7 @@ r=input('Please enter radial distance to fastener in question: ')
 # d is the distance between the attachment point and the fastener cg
 d=1
 F_tot=150
+#theta is the angle to resolve the forces
 theta=120
 Fz_tot=F_tot*sin(theta)
 Ai=20
@@ -15,18 +16,23 @@ Mx=(Fz_tot*d)
 
 #n_f is the number of fasteners
 n_f = 4 
+#Make the inputted string into an integer so it can be multiplied
+r=int(r) 
 
-Sum_Ai_r^2 = 0
+#Find the sum for all of the fasteners
+Sum_Ai_r2 = 0
 Sum_Ai_r = 0
 
 Ar = Ai * r
-Ar^2 = Ai * r**2
-for k in range(n_f)
+Ar2 = Ai * r**2
+
+for k in range(n_f):
   Sum_Ai_r = Sum_Ai_r + Ar
   
-for h in range(n_f)
-  Sum_Ai_r^2 = Sum_Ai_r^2 + Ar^2
-
+for h in range(n_f):
+  Sum_Ai_r2 = Sum_Ai_r2 + Ar2
+  
+#A is the numerator of equation 4.7 and B is the denominator
 A = Mx*Ai*(int(r))
 B = Ai*(int(r))**2
 print(A/B,Mx)
