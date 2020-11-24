@@ -12,7 +12,7 @@ def totForcesLaunch():
     F = np.zeros(3)
 
     # Static forces on ground due to weight, applied directly at pin, added to dynamic launch loads
-    F = np.array([0, 0, - const.g * const.m_sa]) - launch_acc * const.g * const.m_sa
+    F = np.array([0, 0, - const.g * const.m_sa / 2]) - launch_acc * const.g * const.m_sa / 2
 
     return F * const.safety_factor
 
@@ -21,7 +21,7 @@ def totForcesOrbit():
     F = np.zeros(3)
 
     # Dynamic main engine firing forces, applied at CG of solar array
-    F = engine_fire_acc * const.m_sa
+    F = engine_fire_acc * const.m_sa / 2
     
     return F * const.safety_factor
 
@@ -37,7 +37,7 @@ def totMomentsLaunch():
 # Resultant moments of panel on lugs during orbit
 def totMomentsOrbit():
     # Dynamic main engine firing moments since array CG has moment arm
-    M = np.cross(dim.r_sa_from_pin, engine_fire_acc * const.m_sa)
+    M = np.cross(dim.r_sa_from_pin, engine_fire_acc * const.m_sa / 2)
 
     return M * const.safety_factor
 
