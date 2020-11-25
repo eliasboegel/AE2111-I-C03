@@ -22,30 +22,48 @@ radius_hole = diameter_hole /2
 Ai= pi * radius_hole**2
 Mx=(Fz_tot*d)
 
-#n_f is the number of fasteners
-n_f = 4 
+#find sum of inner fasteners
 
-#Find the sum for all of the fasteners
-Sum_Ai_rho_out = 0
+n_f = 4 #n_f is the number of inner fasteners
+rho_in = int(rho_in) #radial distance to the fastener cg of the inner fasteners
+Sum_Ai_rho2_in = 0
 Sum_Ai_rho_in = 0
 
-Ar = Ai * rho_in
-Ar2 = Ai * rho_out**2
-
+Arho_in = Ai * rho_in
+Arho2_in = Ai * rho_in**2
 for k in range(n_f):
-  Sum_Ai_rho_in = Sum_Ai_rho_in + Ar
+  Sum_Ai_rho_in = Sum_Ai_rho_in + Ai * rho_in
   
 for h in range(n_f):
-  Sum_Ai_r2 = Sum_Ai_r2 + Ar2
-  
-#A is the numerator of equation 4.7 and B is the denominator
-A1 = Mx*Ai*(int(r))
-B1 = Ai*(int(r))**2
-print(A1/B1,Mx)
+  Sum_Ai_rho2_in = Sum_Ai_rho2_in + Ai * rho_in^2
 
-A2 = Mx*Ai*(int(r))
-B2 = Ai*(int(r))**2
-print(A2/B2,Mx)
+#find sum of the outer fasteners
+
+n_f = 4 #n_f is the number of outer fasteners
+rho_out = int(rho_out) #radial distance to the fastener cg of the inner fasteners
+Sum_Ai_rho2_out = 0
+Sum_Ai_rho_out = 0
+
+Arho_out = Ai * rho_out
+Arho2_out = Ai * rho_out**2
+for k in range(n_f):
+  Sum_Ai_rho_out = Sum_Ai_rho_out + Ai * rho_out
+  
+for h in range(n_f):
+  Sum_Ai_rho2_out = Sum_Ai_rho2_out + Ai * rho_out^2
+
+#find total sum of the fasteners
+
+totSum_Ai_rho = Sum_Ai_rho_out + Sum_Ai_rho_in
+totSum_Ai_rho2 = Sum_Ai_rho2_out + Sum_Ai_rho2_in
+
+
+A = Mx * totSum_Ai_rho
+B = totSum_Ai_rho2
+print(A/B,Mx)
+
+
+Fp_Mx = Mx*(A/B)
 
 
 Halloooo
