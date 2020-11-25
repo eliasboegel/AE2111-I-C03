@@ -1,10 +1,10 @@
 import numpy as np
 from math import sin, cos, atan2, pi
 from dimensions import *
-
+from fastnerlocations import *
 
 TESTING_forces_and_moments_temporary_dictionary = {"F_x": -16523, "M_y": 0, "F_z": 4721, "coord_z": 0, "coord_x": 0}
-TESTING_fasteners_list = [{"coord_x": 0, "coord_z": 0, "diameter": D2}, {"coord_x": 2, "coord_z": 2, "diameter": D2}, {"coord_x": 4, "coord_z": 2, "diameter": D2}, {"coord_x": 5, "coord_z": 4, "diameter": D2}, {"coord_x": 0, "coord_z": 1, "diameter": D2}, {"coord_x": 2, "coord_z": 3, "diameter": D2}, {"coord_x": 2, "coord_z": 3, "diameter": D2}, {"coord_x": 2, "coord_z": 3, "diameter": D2}]
+TESTING_fasteners_list = [{"coord_x": fastcordx_1, "coord_z": fastcordz_1, "diameter": D2}, {"coord_x": fastcordx_2, "coord_z": fastcordz_2, "diameter": D2}, {"coord_x": fastcordx_3, "coord_z": fastcordz_3, "diameter": D2}, {"coord_x": fastcordx_4, "coord_z": fastcordz_4, "diameter": D2}, {"coord_x": fastcordx_5, "coord_z": fastcordz_5, "diameter": D2}, {"coord_x": fastcordx_6, "coord_z": fastcordz_6, "diameter": D2}, {"coord_x": fastcordx_7, "coord_z": fastcordz_7, "diameter": D2}, {"coord_x": fastcordx_8, "coord_z": fastcordz_8, "diameter": D2}]
 TESTING_stress_allowable = matstress_allowable
 TESTING_t2 = t2
 
