@@ -72,9 +72,6 @@ for lug in range(0, 1):
                                 }
 
                             # call all the checks from here, using F, M, dim and mat
-                            # F is a list of 3 elements, forces at the wall, center of lug in x, y, z
-                            # M is a list of 3 elements, momentss at the wall, center of lug in x, y, z
+                            # F is a dictionary, forces at the wall, center of lug, with components Fx, Fy, Fz
+                            # M is a dictionary, moments at the wall, center of lug, with components Mx, My, Mz
                             # dim is a dictionary with the above components
-
-
-
