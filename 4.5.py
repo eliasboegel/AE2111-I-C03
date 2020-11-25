@@ -8,9 +8,10 @@ TESTING_fasteners_list = [{"coord_x": 0, "coord_z": 0, "diameter": 1}, {"coord_x
 TESTING_stress_allowable = 20
 TESTING_t2 = 2
 
-info_fastener = {"E": 2, "diameter": 0.01, "alpha": 0.05} # Fill in with actual values
+info_fastener = {"E": 2, "diameter": 0.01, "alpha": 0.05, "Dfo": 0.00678, "Dfi": 0.004} # Fill in with actual values
 alpha_clamped_part = 0.08 
-phi = 0 
+lug_E = 50
+spacecraft_wall_thickness = 0.004
 
 
 def CG_calculator(fastener_details_list): # I changed it slightly to take in the data in another form, and into a function
@@ -99,6 +100,14 @@ def bearing_stress_calculator(in_plane_forces_dictionary, current_fastener_detai
     return B_stress
 
 
+def calculate_phi(t2, lugbackup_E, Dfo, Dfi, fastener_E, Lhsub, fastenerNomDiameter, Lengsub, t3, nut_E, Lnsub):
+    delta_A = 4 * t2 / (lugbackup_E * pi * (Dfo **2 - Dfi ** 2))
+    fastener_A = fastenerNomDiameter ** 2 * pi / 4
+    delta_B = 1 / fastener_E * (Lhsub + Lengsub + t2 + t3) / fastener_A + Lnsub / (nut_E * fastenerNomDiameter)
+    return delta_A / (delta_A + delta_B)
+
+
+
 """ Thermal intensity values """
 
 #Earth
@@ -164,6 +173,8 @@ T_eqmax = (Q_absorbed_max/ (epsilon*sigma*A_e))**(1/4)
 
 
 temperatures = {"reference": 288.15, "min": T_eqmin, "max": T_eqmax} 
+phi = calculate_phi(TESTING_t2, lug_E, info_fastener["Dfo"], info_fastener["Dfi"], info_fastener["E"], 0.4 * info_fastener["diameter"], info_fastener["diameter"], 0.33 * info_fastener["diameter"], spacecraft_wall_thickness, info_fastener["E"], 0.4 * info_fastener["diameter"])
+
 
 F_T_max = (alpha_clamped_part - info_fastener["alpha"]) * (temperatures["max"] - temperatures["reference"]) * info_fastener["E"] * info_fastener["diameter"] ** 2 / 4 * (1 - phi)
 F_T_min = (alpha_clamped_part - info_fastener["alpha"]) * (temperatures["min"] - temperatures["reference"]) * info_fastener["E"] * info_fastener["diameter"] ** 2 / 4 * (1 - phi)
