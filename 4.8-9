@@ -7,12 +7,15 @@ from math import sin, cos
 r=input('Please enter radial distance to fastener in question: ')
 # d is the distance between the attachment point and the fastener cg
 
-d = h/2
+d = 
 F_tot= 89.666 / 2
 #theta is the angle to resolve the forces
 theta=45
 Fz_tot=F_tot*sin(theta)
-Ai= pi * 4**2
+
+diameter_hole = 4
+radius_hole = diameter_hole /2
+Ai= pi * radius_hole**2
 Mx=(Fz_tot*d)
 
 #n_f is the number of fasteners
