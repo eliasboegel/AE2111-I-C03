@@ -101,11 +101,16 @@ def bearing_stress_calculator(in_plane_forces_dictionary, current_fastener_detai
     return B_stress
 
 
+<<<<<<< Updated upstream
 def calculate_phi(t2, lugbackup_E, Dfo, Dfi, fastener_E, Lhsub, fastenerNomDiameter, Lengsub, t3, nut_E, Lnsub):
     delta_A = 4 * t2 / (lugbackup_E * pi * (Dfo **2 - Dfi ** 2))
     fastener_A = fastenerNomDiameter ** 2 * pi / 4
     delta_B = 1 / fastener_E * (Lhsub + Lengsub + t2 + t3) / fastener_A + Lnsub / (nut_E * fastenerNomDiameter)
     return delta_A / (delta_A + delta_B)
+=======
+def calculate_phi(backupplate_E, Dfo, Dfi, t2, fastener_E, Lhsub, fastener_Anom, L_engsub, E_nut, Lnsub):
+    delta_a = 4 * t2 / (backupplate_E * pi)
+>>>>>>> Stashed changes
 
 
 """ Thermal intensity values """
@@ -129,9 +134,17 @@ sigma = 5.67*10**(-8)
 
 """ emitting and projected area of lug """
 #calculations of the area
+<<<<<<< Updated upstream
 A_front = 2 * (w * t1) + 3* (h * w) - 4 * pi * (0.5*D2)**2
 
 A_sunlitside = t2 * w + L * w + 0.5 * pi * (0.5*w)**2 - pi * (0.5*D1)**2
+=======
+A_side = t2 * w + w * (L-0.5*D1) + (pi*(0.5*w)**2)-(pi*(D1*0.5)**2)
+
+A_neg_solararray = 2 * (w * t1) + (h*w)*3 - 4*pi*(0.5*D2)**2 #done
+
+A_top_bottom = ((3*(h*t2)+2*t1*t2)+L*t1*2)*2
+>>>>>>> Stashed changes
 
 A_top = h * t2 * 3 + (L + 0.5 * w) * t1
 
