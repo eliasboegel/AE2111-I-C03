@@ -5,11 +5,11 @@ d = 0.1 # m, Distance between both lug pinhole centers
 
 # Dimensions regarding one lug
 L = 0.05 # m, Distance of pin center from wall
-w = 0.005 # m
-h = 0.005 # m
-D1 = 0.01 # m
-D2 = 0.01 # m
-t1 = 0.005 # m
+w = 0.0235 # m
+h = 0.008 # m
+D1 = 0.0035 # m
+D2 = 0.004 # m
+t1 = 0.004 # m
 t2 = 0.005 # ms
 
 # X, Y, Z
