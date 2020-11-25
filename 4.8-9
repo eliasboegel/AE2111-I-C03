@@ -16,6 +16,8 @@ F_tot= 89.666 / 2
 #theta is the angle to resolve the forces
 theta=45
 Fz_tot=F_tot*sin(theta)
+n_f_total = 8
+F_pi = Fz_tot/n_f_total
 
 diameter_hole = 4
 radius_hole = diameter_hole /2
@@ -24,7 +26,7 @@ Mx=(Fz_tot*d)
 
 #find sum of inner fasteners
 
-n_f = 4 #n_f is the number of inner fasteners
+n_fin = 4 #n_f is the number of inner fasteners
 rho_in = int(rho_in) #radial distance to the fastener cg of the inner fasteners
 Sum_Ai_rho2_in = 0
 Sum_Ai_rho_in = 0
@@ -39,7 +41,7 @@ for h in range(n_f):
 
 #find sum of the outer fasteners
 
-n_f = 4 #n_f is the number of outer fasteners
+n_fout = 4 #n_f is the number of outer fasteners
 rho_out = int(rho_out) #radial distance to the fastener cg of the inner fasteners
 Sum_Ai_rho2_out = 0
 Sum_Ai_rho_out = 0
