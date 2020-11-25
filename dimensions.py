@@ -10,7 +10,7 @@ h = 0.008 # m
 D1 = 0.0035 # m
 D2 = 0.004 # m
 t1 = 0.004 # m
-t2 = 0.005 # ms
+t2 = 0.004 # ms
 
 # X, Y, Z
 coord_origin = np.array([0, 0, 0]) # This is centered between both logs on the wall surface
