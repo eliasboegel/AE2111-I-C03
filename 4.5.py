@@ -5,10 +5,10 @@ from dimensions import *
 
 TESTING_forces_and_moments_temporary_dictionary = {"F_x": 500, "M_y": 5, "F_z": 5, "coord_z": 0, "coord_x": 0}
 TESTING_fasteners_list = [{"coord_x": 0, "coord_z": 0, "diameter": 1}, {"coord_x": 2, "coord_z": 2, "diameter": 2}, {"coord_x": 4, "coord_z": 2, "diameter": 1}, {"coord_x": 5, "coord_z": 4, "diameter": 4}, {"coord_x": 0, "coord_z": 1, "diameter": 6}, {"coord_x": 2, "coord_z": 3, "diameter": 4}]
-TESTING_stress_allowable = 20
-TESTING_t2 = 2
+TESTING_stress_allowable = matstress_allowable
+TESTING_t2 = t2
 
-info_fastener = {"E": 2, "diameter": 0.01, "alpha": 0.05} # Fill in with actual values
+info_fastener = {"E": 2, "diameter": D2, "alpha": alpha} # Fill in with actual values
 alpha_clamped_part = 0.08 
 phi = 0 
 
