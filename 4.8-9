@@ -4,8 +4,12 @@ from math import sin, cos
 # x_n is the fastener number (i.e fastener 2 -> x_n=2)
 
 # Input for radial distance for fastener cg to ith fastener
-r=input('Please enter radial distance to fastener in question: ')
 # d is the distance between the attachment point and the fastener cg
+
+h = 
+
+rho_out = h/2 + ((40.9**0.5)*((h**0.5)/(2**0.5))) + 20.983148
+rho_in = h/2 + ((22.1**0.5)*((h**0.5)/(2**0.5))) + 12.008
 
 d = 
 F_tot= 89.666 / 2
@@ -20,29 +24,28 @@ Mx=(Fz_tot*d)
 
 #n_f is the number of fasteners
 n_f = 4 
-#Make the inputted string into an integer so it can be multiplied
-r=int(r) 
 
 #Find the sum for all of the fasteners
-Sum_Ai_r2 = 0
-Sum_Ai_r = 0
+Sum_Ai_rho_out = 0
+Sum_Ai_rho_in = 0
 
-Ar = Ai * r
-Ar2 = Ai * r**2
+Ar = Ai * rho_in
+Ar2 = Ai * rho_out**2
 
 for k in range(n_f):
-  Sum_Ai_r = Sum_Ai_r + Ar
+  Sum_Ai_rho_in = Sum_Ai_rho_in + Ar
   
 for h in range(n_f):
   Sum_Ai_r2 = Sum_Ai_r2 + Ar2
   
 #A is the numerator of equation 4.7 and B is the denominator
-A = Mx*Ai*(int(r))
-B = Ai*(int(r))**2
-print(A/B,Mx)
+A1 = Mx*Ai*(int(r))
+B1 = Ai*(int(r))**2
+print(A1/B1,Mx)
 
-
-Fp_Mz=n_f*(A/B)
+A2 = Mx*Ai*(int(r))
+B2 = Ai*(int(r))**2
+print(A2/B2,Mx)
 
 
 Halloooo
