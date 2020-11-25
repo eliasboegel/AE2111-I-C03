@@ -7,12 +7,10 @@ TESTING_forces_and_moments_temporary_dictionary = {"F_x": -16523, "M_y": 0, "F_z
 TESTING_fasteners_list = [{"coord_x": fastcordx_1, "coord_z": fastcordz_1, "diameter": D2}, {"coord_x": fastcordx_2, "coord_z": fastcordz_2, "diameter": D2}, {"coord_x": fastcordx_3, "coord_z": fastcordz_3, "diameter": D2}, {"coord_x": fastcordx_4, "coord_z": fastcordz_4, "diameter": D2}, {"coord_x": fastcordx_5, "coord_z": fastcordz_5, "diameter": D2}, {"coord_x": fastcordx_6, "coord_z": fastcordz_6, "diameter": D2}, {"coord_x": fastcordx_7, "coord_z": fastcordz_7, "diameter": D2}, {"coord_x": fastcordx_8, "coord_z": fastcordz_8, "diameter": D2}]
 TESTING_stress_allowable = matstress_allowable
 TESTING_t2 = t2
-t3 = 4E-3
 
-info_fastener = {"E": 70E9, "diameter": D2, "alpha": 0.05, "Dfo": 0.00678, "Dfi": 0.004} # Fill in with actual values
+info_fastener = {"E": 2, "diameter": D2, "alpha": 0.05} # Fill in with actual values
 alpha_clamped_part = 0.08 
-lug_E = 70E9
-
+phi = 0 
 
 
 def CG_calculator(fastener_details_list): # I changed it slightly to take in the data in another form, and into a function
@@ -101,13 +99,6 @@ def bearing_stress_calculator(in_plane_forces_dictionary, current_fastener_detai
     return B_stress
 
 
-def calculate_phi(t2, lugbackup_E, Dfo, Dfi, fastener_E, Lhsub, fastenerNomDiameter, Lengsub, t3, nut_E, Lnsub):
-    delta_A = 4 * t2 / (lugbackup_E * pi * (Dfo **2 - Dfi ** 2))
-    fastener_A = fastenerNomDiameter ** 2 * pi / 4
-    delta_B = 1 / fastener_E * (Lhsub + Lengsub + t2 + t3) / fastener_A + Lnsub / (nut_E * fastenerNomDiameter)
-    return delta_A / (delta_A + delta_B)
-
-
 """ Thermal intensity values """
 
 #Earth
@@ -174,8 +165,6 @@ T_eqmax = (Q_absorbed_max/ (epsilon*sigma*A_e))**(1/4)
 
 temperatures = {"reference": 288.15, "min": T_eqmin, "max": T_eqmax} 
 
-phi = calculate_phi(t2, lug_E, info_fastener["Dfo"], info_fastener["Dfi"], info_fastener["E"], 0.4 * info_fastener["diameter"], info_fastener["diameter"], 0.33 * info_fastener["diameter"], t3, info_fastener["E"], 0.4 * info_fastener["diameter"])
-
 F_T_max = (alpha_clamped_part - info_fastener["alpha"]) * (temperatures["max"] - temperatures["reference"]) * info_fastener["E"] * info_fastener["diameter"] ** 2 / 4 * (1 - phi)
 F_T_min = (alpha_clamped_part - info_fastener["alpha"]) * (temperatures["min"] - temperatures["reference"]) * info_fastener["E"] * info_fastener["diameter"] ** 2 / 4 * (1 - phi)
 
@@ -205,6 +194,8 @@ for i in TESTING_fasteners_list:
 
     else:
         print("Failed to compute")
+
+    print("The MS for fastener number", TESTING_fastener_counter+1, "is:", (TESTING_stress_allowable/bearing_stress_Tmax)-1)
 
     TESTING_fastener_counter += 1
 
