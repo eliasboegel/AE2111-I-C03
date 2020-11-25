@@ -31,14 +31,13 @@ dim = {
     "t1",
     "t2",
     "h",
-    "L",
-    "d"
+    "L"
 }
 
 mats = [
     {"name" : "Al_2014_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 123, "E" : 123},
     {"name" : "Al_2024_T3", "alpha" : 123, "rho" : 123, "sigma_y" : 123, "E" : 123},
-    {"name" : "Al_7075_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 123, "E" : 123},
+    {"name" : "Al_7075_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 123, "E" : 123}
 ]
 
 
@@ -60,19 +59,22 @@ for lug in range(0, 1):
                 for t1 in np.arange(t1_start, t1_end, t1_step):
                     for t2 in np.arange(t2_start, t2_end, t2_step):
                         for h in np.arange(h_start, h_end, h_step):
-                                dim = {
-                                        "w1" : w1,
-                                        "w2" : w2,
-                                        "d1" : d1,
-                                        "d2" : d2,
-                                        "t1" : t1,
-                                        "t2" : t2,
-                                        "h" : h,
-                                        "L" : L,
-                                        "d" : d
-                                    }
+                            dim = {
+                                    "w1" : w1,
+                                    "w2" : w2,
+                                    "d1" : d1,
+                                    "d2" : d2,
+                                    "t1" : t1,
+                                    "t2" : t2,
+                                    "h" : h,
+                                    "L" : L,
+                                    "d" : d
+                                }
 
                             # call all the checks from here, using F, M, dim and mat
                             # F is a list of 3 elements, forces at the wall, center of lug in x, y, z
                             # M is a list of 3 elements, momentss at the wall, center of lug in x, y, z
                             # dim is a dictionary with the above components
+
+
+
