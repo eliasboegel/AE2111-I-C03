@@ -21,7 +21,7 @@ F_pi = Fz_tot/n_f_total
 
 diameter_hole = 4
 radius_hole = diameter_hole /2
-Ai= pi * radius_hole**2
+Ai= pi * radius_hole**2 #area of the fastener cross section
 Mx=(Fz_tot*d)
 
 #find sum of inner fasteners
@@ -33,6 +33,7 @@ Sum_Ai_rho_in = 0
 
 Arho_in = Ai * rho_in
 Arho2_in = Ai * rho_in**2
+
 for k in range(n_f_in):
   Sum_Ai_rho_in = Sum_Ai_rho_in + Ai * rho_in
   
@@ -59,13 +60,37 @@ for h in range(n_f_out):
 totSum_Ai_rho = Sum_Ai_rho_out + Sum_Ai_rho_in
 totSum_Ai_rho2 = Sum_Ai_rho2_out + Sum_Ai_rho2_in
 
+# Fp_Mx for outer lower fasteners
 
 A = Mx * totSum_Ai_rho
 B = totSum_Ai_rho2
-print(A/B,Mx)
+
+Fp_Mx_outerlower = (A/B)
+F_pullthrough_outerlower = Fp_Mx_outerlower + F_pi
 
 
-Fp_Mx = Mx*(A/B)
+# Fp_Mx for inner lower fasteners
+
+C = Mx * totSum_Ai_rho
+D = totSum_Ai_rho2
+
+Fp_Mx_innerlower = (C/D)
+F_pullthrough_innerlower = Fp_Mx_outerlower + F_pi
+
+# Fp_Mx for outer upper fasteners
+
+A = -Mx * totSum_Ai_rho
+B = totSum_Ai_rho2
+
+Fp_Mx_outerupper = (A/B)
+F_pullthrough_outerupper = Fp_Mx_outerupper + F_pi
+
+# Fp_Mx for inner upper fasteners
+
+C = Mx * totSum_Ai_rho
+D = totSum_Ai_rho2
+
+Fp_Mx_innerupper = (C/D)
+F_pullthrough_innerupper = Fp_Mx_outerupper + F_pi
 
 
-Halloooo
