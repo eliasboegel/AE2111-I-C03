@@ -17,3 +17,8 @@ coord_origin = np.array([0, 0, 0]) # This is centered between both logs on the w
 r_pin_1 = np.array([0, L, d/2]) # Location of the force application point of the lug loads with respect to wall coordinate system
 r_pin_2 = np.array([0, L, -d/2]) # Location of the force application point of the lug loads with respect to wall coordinate system
 r_sa_from_pin = np.array([0, 6 - L - 2.2 / 2, 0]) # Distance of the solar array CG from the pin
+
+#material properties
+matstress_allowable = 444.5*10**6 #Pa
+alpha = 0.15 #absorptivity
+epsilon = 0.05 #emissivity
