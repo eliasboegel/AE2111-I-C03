@@ -26,32 +26,32 @@ Mx=(Fz_tot*d)
 
 #find sum of inner fasteners
 
-n_fin = 4 #n_f is the number of inner fasteners
+n_f_in = 4 #n_f_in is the number of inner fasteners
 rho_in = int(rho_in) #radial distance to the fastener cg of the inner fasteners
 Sum_Ai_rho2_in = 0
 Sum_Ai_rho_in = 0
 
 Arho_in = Ai * rho_in
 Arho2_in = Ai * rho_in**2
-for k in range(n_f):
+for k in range(n_f_in):
   Sum_Ai_rho_in = Sum_Ai_rho_in + Ai * rho_in
   
-for h in range(n_f):
+for h in range(n_f_in):
   Sum_Ai_rho2_in = Sum_Ai_rho2_in + Ai * rho_in^2
 
 #find sum of the outer fasteners
 
-n_fout = 4 #n_f is the number of outer fasteners
+n_f_out = 4 #n_f_out is the number of outer fasteners
 rho_out = int(rho_out) #radial distance to the fastener cg of the inner fasteners
 Sum_Ai_rho2_out = 0
 Sum_Ai_rho_out = 0
 
 Arho_out = Ai * rho_out
 Arho2_out = Ai * rho_out**2
-for k in range(n_f):
+for k in range(n_f_out):
   Sum_Ai_rho_out = Sum_Ai_rho_out + Ai * rho_out
   
-for h in range(n_f):
+for h in range(n_f_out):
   Sum_Ai_rho2_out = Sum_Ai_rho2_out + Ai * rho_out^2
 
 #find total sum of the fasteners
