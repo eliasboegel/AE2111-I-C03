@@ -12,7 +12,7 @@ F_tot= 89.666 / 2
 #theta is the angle to resolve the forces
 theta=45
 Fz_tot=F_tot*sin(theta)
-Ai=20
+Ai= pi * 4**2
 Mx=(Fz_tot*d)
 
 #n_f is the number of fasteners
