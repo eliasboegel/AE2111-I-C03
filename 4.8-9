@@ -54,7 +54,7 @@ print('pull-through load of the outer lower fasteners =',F_pullthrough_outerlowe
 C = Mx * Ai * rho_in
 D = totSum_Ai_rho2
 Fp_Mx_innerlower = (C/D)
-F_pullthrough_innerlower = Fp_Mx_outerlower + F_pi
+F_pullthrough_innerlower = Fp_Mx_innerlower + F_pi
 print('pull-through load of the inner lower fasteners =',F_pullthrough_innerlower)
 
 
@@ -70,6 +70,6 @@ print('pull-through load of the outer upper fasteners =',F_pullthrough_outeruppe
 C = -Mx * Ai * rho_in
 D = totSum_Ai_rho2
 Fp_Mx_innerupper = (C/D)
-F_pullthrough_innerupper = Fp_Mx_outerupper + F_pi
+F_pullthrough_innerupper = Fp_Mx_innerupper + F_pi
 print('pull-through load of the inner upper fasteners =',F_pullthrough_innerupper)
 
