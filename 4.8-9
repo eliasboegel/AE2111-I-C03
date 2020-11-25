@@ -6,7 +6,7 @@ from math import sin, cos
 # Input for radial distance for fastener cg to ith fastener
 # d is the distance between the attachment point and the fastener cg
 
-h = 
+h = 8 #mm
 
 rho_out = h/2 + ((40.9**0.5)*((h**0.5)/(2**0.5))) + 20.983148
 rho_in = h/2 + ((22.1**0.5)*((h**0.5)/(2**0.5))) + 12.008
