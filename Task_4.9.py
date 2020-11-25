@@ -15,21 +15,21 @@ stress_N = F_y / A_head_ap
 print(stress_N)
 
 #calculating shear stress for t1
-t1 = 2
+t1 = 4 #mm thickness of the spacecraft wall calculated in WP3
 A_t1_ap = pi * t1 * D_fi #area of the attached parts of t1
 stress_t1_V = F_y / A_t1_ap
 
 print('shearstress in t1 = ',stress_t1_V)
 
 #calculating shear stress for t2
-t2 = 2
+t2 = 2 #mm this value is calculated earlier
 A_t2_ap = pi * t2 * D_fi #area of the attached parts of t2
 stress_t2_V = F_y / A_t2_ap
 
 print('shearstress in t2 = ',stress_t2_V)
 
 #calculating shaer stress for t3
-t3 = 2
+t3 = 4 #mm calculacted earlier in the report WP4
 A_t3_ap = pi * t3 * D_fi #area of the attached parts of t3
 stress_t3_V = F_y / A_t3_ap
 
