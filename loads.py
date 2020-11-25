@@ -44,14 +44,14 @@ def totMomentsOrbit():
 
 
 # Forces that Lug 1 creates on the wall, acts at center of Lug 1
-def wallForcesLug1(totForces, totMoments):
+def wallForcesLug1(totForces, totMoments, d):
     # Each lug carries half the applied forces
     F = totForces / 2
 
     # Add force components based on applied moments, as well as distance between lugs
     F += np.array([
-        totMoments[1] / dim.d / 2, 
-        - totMoments[0] / dim.d / 2,
+        totMoments[1] / d / 2, 
+        - totMoments[0] / d / 2,
         0
         ])
 
@@ -69,14 +69,14 @@ def wallMomentsLug1(totForces, totMoments):
     return M
 
 # Forces that Lug 2 creates on the wall, acts at center of Lug 2
-def wallForcesLug2(totForces, totMoments):
+def wallForcesLug2(totForces, totMoments, d):
     # Each lug carries half the applied forces
     F = totForces / 2
 
     # Add force components based on applied moments, as well as distance between lugs
     F += np.array([
-        - totMoments[1] / dim.d / 2, 
-        totMoments[0] / dim.d / 2,
+        - totMoments[1] / d / 2, 
+        totMoments[0] / d / 2,
         0
         ])
 
