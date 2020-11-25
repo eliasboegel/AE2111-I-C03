@@ -6,10 +6,11 @@ from math import sin, cos
 # Input for radial distance for fastener cg to ith fastener
 r=input('Please enter radial distance to fastener in question: ')
 # d is the distance between the attachment point and the fastener cg
-d=1
-F_tot=150
+
+d = h/2
+F_tot= 89.666 / 2
 #theta is the angle to resolve the forces
-theta=120
+theta=45
 Fz_tot=F_tot*sin(theta)
 Ai=20
 Mx=(Fz_tot*d)
