@@ -7,10 +7,11 @@ TESTING_forces_and_moments_temporary_dictionary = {"F_x": -16523, "M_y": 0, "F_z
 TESTING_fasteners_list = [{"coord_x": fastcordx_1, "coord_z": fastcordz_1, "diameter": D2}, {"coord_x": fastcordx_2, "coord_z": fastcordz_2, "diameter": D2}, {"coord_x": fastcordx_3, "coord_z": fastcordz_3, "diameter": D2}, {"coord_x": fastcordx_4, "coord_z": fastcordz_4, "diameter": D2}, {"coord_x": fastcordx_5, "coord_z": fastcordz_5, "diameter": D2}, {"coord_x": fastcordx_6, "coord_z": fastcordz_6, "diameter": D2}, {"coord_x": fastcordx_7, "coord_z": fastcordz_7, "diameter": D2}, {"coord_x": fastcordx_8, "coord_z": fastcordz_8, "diameter": D2}]
 TESTING_stress_allowable = matstress_allowable
 TESTING_t2 = t2
+spacecraft_wall_thickness = 4E-3
 
-info_fastener = {"E": 2, "diameter": D2, "alpha": 0.05} # Fill in with actual values
+info_fastener = {"E": 70E9, "diameter": D2, "alpha": 0.05, "Dfo": 0.00678, "Dfi": 0.004} # Fill in with actual values
+lug_E = 70E9
 alpha_clamped_part = 0.08 
-phi = 0 
 
 
 def CG_calculator(fastener_details_list): # I changed it slightly to take in the data in another form, and into a function
@@ -86,8 +87,8 @@ def in_plane_moment(M_cgy, all_fastener_details_list, CG_coordinates, current_fa
         sum_fastener_area_times_r_squared += denominator_fastener_radius_squared * i["diameter"] ** 2 * pi / 4
     current_fastener_radius = ((all_fastener_details_list[current_fastener_number]["coord_x"] - CG_coordinates[0]) ** 2 + (all_fastener_details_list[current_fastener_number]["coord_z"] - CG_coordinates[1]) ** 2) ** 0.5
     F_in_plane_my = M_cgy * all_fastener_details_list[current_fastener_number]["diameter"] ** 2 * pi / 4 * current_fastener_radius / sum_fastener_area_times_r_squared
-    phi = atan2((all_fastener_details_list[current_fastener_number]["coord_x"] - CG_coordinates[0]) , (all_fastener_details_list[current_fastener_number]["coord_z"] - CG_coordinates[1]))
-    return { "F_in_plane_x": F_in_plane_my * cos(phi), "F_in_plane_z": - F_in_plane_my * sin(phi)}
+    psi = atan2((all_fastener_details_list[current_fastener_number]["coord_x"] - CG_coordinates[0]) , (all_fastener_details_list[current_fastener_number]["coord_z"] - CG_coordinates[1]))
+    return { "F_in_plane_x": F_in_plane_my * cos(psi), "F_in_plane_z": - F_in_plane_my * sin(psi)}
 
 
 """Bearing stress calculator"""
@@ -99,8 +100,11 @@ def bearing_stress_calculator(in_plane_forces_dictionary, current_fastener_detai
     return B_stress
 
 
-def calculate_phi(backupplate_E, Dfo, Dfi, t2, fastener_E, Lhsub, fastener_Anom, L_engsub, E_nut, Lnsub):
-    delta_a = 4 * t2 / (backupplate_E * pi)
+def calculate_phi(t2, lugbackup_E, Dfo, Dfi, fastener_E, Lhsub, fastenerNomDiameter, Lengsub, t3, nut_E, Lnsub):
+    delta_A = 4 * t2 / (lugbackup_E * pi * (Dfo **2 - Dfi ** 2))
+    fastener_A = fastenerNomDiameter ** 2 * pi / 4
+    delta_B = 1 / fastener_E * (Lhsub + Lengsub + t2 + t3) / fastener_A + Lnsub / (nut_E * fastenerNomDiameter)
+    return delta_A / (delta_A + delta_B)
 
 
 """ Thermal intensity values """
@@ -170,6 +174,8 @@ T_eqmax = (Q_absorbed_max/ (epsilon*sigma*A_e))**(1/4)
 
 
 temperatures = {"reference": 288.15, "min": T_eqmin, "max": T_eqmax} 
+
+phi = calculate_phi(TESTING_t2, lug_E, info_fastener["Dfo"], info_fastener["Dfi"], info_fastener["E"], 0.4 * info_fastener["diameter"], info_fastener["diameter"], 0.33 * info_fastener["diameter"], spacecraft_wall_thickness, info_fastener["E"], 0.4 * info_fastener["diameter"])
 
 F_T_max = (alpha_clamped_part - info_fastener["alpha"]) * (temperatures["max"] - temperatures["reference"]) * info_fastener["E"] * info_fastener["diameter"] ** 2 / 4 * (1 - phi)
 F_T_min = (alpha_clamped_part - info_fastener["alpha"]) * (temperatures["min"] - temperatures["reference"]) * info_fastener["E"] * info_fastener["diameter"] ** 2 / 4 * (1 - phi)
