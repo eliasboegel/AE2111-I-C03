@@ -99,6 +99,10 @@ def bearing_stress_calculator(in_plane_forces_dictionary, current_fastener_detai
     return B_stress
 
 
+def calculate_phi(backupplate_E, Dfo, Dfi, t2, fastener_E, Lhsub, fastener_Anom, L_engsub, E_nut, Lnsub):
+    delta_a = 4 * t2 / (backupplate_E * pi)
+
+
 """ Thermal intensity values """
 
 #Earth
