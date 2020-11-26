@@ -3,8 +3,8 @@ from math import pi
 def get_MS(dim,mat,loads)
 
   #calculating the normal stress
-  D_fo = 7 #outer diameter in mm
-  D_fi = 4 #inner diameter in mm
+  D_fo = dim["D2"] #outer diameter in mm
+  D_fi = dim["D1"] #inner diameter in mm
   r_fo = D_fo / 2
   r_fi = D_fi / 2
 
