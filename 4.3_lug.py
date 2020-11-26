@@ -1,6 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# example
+def lug_get_MS(dim, mat, loads):
+    """do calculations for the maximum loads with these dimensions and this material"""
+    stress_max = float() # this will be the max stress
+    ms = stress_max / dim['sigma_y'] - 1
+    return ms
+
 
 class Lug:
     def __init__(self, w, D, t):
@@ -37,6 +44,7 @@ class Lug:
         print(f"A1: {round(self.A1, 3)}, A2: {round(self.A2, 3)}, A3: {round(self.A3, 3)}, A4: {round(self.A4, 3)}, D: {round(self.D, 3)}, t: {round(self.t, 3)}, ")
 
 
+
 class Material:
     materials = []
 
@@ -67,9 +75,10 @@ def curve_axial(x):
     return y
 
 
-F_a = 66538 / 2  # axial load
-F_t = 66538 / 2  # transverse laod
-F_x = 1.25 * 7 * 9.80665 * 2700 * 0.25
+F = 3338
+F_a = F / 2  # axial load
+F_t = F / 2  # transverse laod
+F_x = 1.25 * 7 * 9.80665 * 192.5 * 0.25
 
 
 
@@ -83,15 +92,15 @@ def failure_check():
     sigma_y_t = F_t / curve_transverse(Lug.A_av / Lug.A_br) / Lug.A_br
     L = Lug.D * 1.5
     sigma_bending = F_x * L * 6 / w / Lug.t**2
-    return max(sigma_y_a, sigma_y_t, sigma_bending)
+    return max(sigma_y_a, sigma_y_t, sigma_bending, sigma_bending + sigma_y_a)
 
 
 """iteration section"""
 #np.array =([D, t, w, material, mass])
-D1 = 0.011
+D1 = 0.00346
 table = np.array([0, 0, 0, 0, 0])
 for d in np.arange(D1, 0.06, 0.001):
-    for t in np.arange(0.01, 0.05, 0.001):
+    for t in np.arange(0.001, 0.01, 0.001):
         for w in np.arange(d + 0.02, 0.08, 0.005):
             for material in Material.materials:
                 Lug.simplify(w, d, t)
