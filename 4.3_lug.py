@@ -1,13 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# example
-def lug_get_MS(dim, mat, loads):
-    """do calculations for the maximum loads with these dimensions and this material"""
-    stress_max = float() # this will be the max stress
-    ms = stress_max / dim['sigma_y'] - 1
-    return ms
-
 
 class Lug:
     def __init__(self, w, D, t):
@@ -116,3 +109,12 @@ print(np.array(["D1", "t1", "w", "material", "mass"]))
 table = table[table[:, 4].argsort()]
 print(table)
 print(table.shape)
+
+
+# example
+def lug_get_MS(dim, mat, loads):
+    """do calculations for the maximum loads with these dimensions and this material"""
+    Lug.simplify(dim["w1"], dim["D1"], dim["t1"])
+    stress_max = failure_check()
+    ms = stress_max / mat['sigma_y'] - 1
+    return ms
