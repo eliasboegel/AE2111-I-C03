@@ -17,14 +17,14 @@ def get_MS(dim,mat,loads)
   print(stress_N)
 
   #calculating shear stress for t1
-  t1 = 4 #mm thickness of the spacecraft wall calculated in WP3
+  t1 = dim["t1"] #mm thickness of the spacecraft wall calculated in WP3
   A_t1_ap = pi * t1 * D_fi #area of the attached parts of t1
   stress_t1_V = F_y / A_t1_ap
 
   print('shearstress in t1 = ',stress_t1_V)
 
   #calculating shear stress for t2
-  t2 = 2 #mm this value is calculated earlier
+  t2 = dim["t2"] #mm this value is calculated earlier
   A_t2_ap = pi * t2 * D_fi #area of the attached parts of t2
   stress_t2_V = F_y / A_t2_ap
 
@@ -44,13 +44,14 @@ def get_MS(dim,mat,loads)
   print('total shearstress = ',stress_V_tot)
 
   #Comparison to yield stress, failure if <1
-  tau_yield = 430 #MPa
+  tau_yield = mat["sigma_y"]
   ratio1 = tau_yield / stress_t1_V
   ratio2 = tau_yield / stress_t2_V
   ratio3 = tau_yield / stress_t3_V
-  ratio0 = tau_yield / stress_V_tot
+  #ratio0 = tau_yield / stress_V_tot
 
   print(ratio1,ratio2,ratio3,ratio0)
+  MS = min(ratio1,ratio2,ratio3)-1
 
   if ratio1 >=1:
     print("SAFE")
@@ -67,7 +68,8 @@ def get_MS(dim,mat,loads)
   else:
         print("FAIL")
 
-  if ratio0 >=1:
-    print("SAFE")
-  else:
-        print("FAIL")
+  #if ratio0 >=1:
+    #print("SAFE")
+  #else:
+        #print("FAIL")
+return MS
