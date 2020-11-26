@@ -116,5 +116,5 @@ def lug_get_MS(dim, mat, loads):
     """do calculations for the maximum loads with these dimensions and this material"""
     Lug.simplify(dim["w1"], dim["D1"], dim["t1"])
     stress_max = failure_check()
-    ms = stress_max / mat['sigma_y'] - 1
+    ms = mat['sigma_y'] / stress_max - 1
     return ms
