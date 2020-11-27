@@ -1,4 +1,5 @@
 from math import pi
+import task48_9 as ddd
 
 def get_MS(dim,mat,loads):
 
@@ -8,7 +9,8 @@ def get_MS(dim,mat,loads):
   r_fo = D_fo / 2
   r_fi = D_fi / 2
 
-  F_y = 4 # pull-through load, newtons
+  F_y = ddd.get_pull_through(dim,mat,loads)
+  #F_y = 4 # pull-through load, newtons
 
   A_head_ap = pi * ( r_fo**2 - r_fi**2 ) #area of the fastener head on the attached parts
 
