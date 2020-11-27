@@ -104,10 +104,12 @@ for d in np.arange(D1, 0.06, 0.001):
                 else:
                     pass
 
+"""
 print(np.array(["D1", "t1", "w", "material", "mass"]))
 table = table[table[:, 4].argsort()]
 print(table)
 print(table.shape)
+"""
 
 
 # example

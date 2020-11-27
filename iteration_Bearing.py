@@ -1,8 +1,9 @@
 import numpy as np
 from math import sin, cos, atan2, pi
+from constants import matstress_allowable, alpha, epsilon
 
 
-def bearingstress_everything(dims, lug_material):
+def bearingstress_everything(dims, lug_material, loads):
 
     """ Fastener coordinates"""
     e1 = 1.5*dims["w1"] / 5
@@ -36,15 +37,15 @@ def bearingstress_everything(dims, lug_material):
     fastcordz_8 = dims["w1"]-e1
 
 
-    TESTING_forces_and_moments_temporary_dictionary = {"F_x": -16523, "M_y": 0, "F_z": 4721, "coord_z": w/2, "coord_x": w+t1+(h/2)}
+    TESTING_forces_and_moments_temporary_dictionary = {"F_x": loads["Fx"], "M_y": loads["My"], "F_z": loads["Fz"], "coord_z": dims["w1"]/2, "coord_x": dims["w1"]+dims["t1"]+(dims["h"]/2)}
     TESTING_fasteners_list = [{"coord_x": fastcordx_1, "coord_z": fastcordz_1, "diameter": dims["d2"]}, {"coord_x": fastcordx_2, "coord_z": fastcordz_2, "diameter": dims["d2"]}, {"coord_x": fastcordx_3, "coord_z": fastcordz_3, "diameter": dims["d2"]}, {"coord_x": fastcordx_4, "coord_z": fastcordz_4, "diameter": dims["d2"]}, {"coord_x": fastcordx_5, "coord_z": fastcordz_5, "diameter": dims["d2"]}, {"coord_x": fastcordx_6, "coord_z": fastcordz_6, "diameter": dims["d2"]}, {"coord_x": fastcordx_7, "coord_z": fastcordz_7, "diameter": dims["d2"]}, {"coord_x": fastcordx_8, "coord_z": fastcordz_8, "diameter": dims["d2"]}]
     TESTING_stress_allowable = matstress_allowable
-    print("matstress", matstress_allowable)
+    #print("matstress", matstress_allowable)
     spacecraft_wall_thickness = 4E-3
 
     info_fastener = {"E": 113.8E9, "diameter": dims["d2"], "alpha": 8.6E-6, "Dfo": 0.00678, "Dfi": 0.004} # Fill in with actual values
     lug_E = lug_material["E"]
-    alpha_clamped_part = lug_material
+    alpha_clamped_part = lug_material["alpha"]
 
 
     def CG_calculator(fastener_details_list): # I changed it slightly to take in the data in another form, and into a function
@@ -161,15 +162,15 @@ def bearingstress_everything(dims, lug_material):
 
     """ emitting and projected area of lug """
     #calculations of the area
-    A_front = 2 * (w * t1) + 3* (h * w) - 4 * pi * (0.5*dims["d2"])**2
+    A_front = 2 * (dims["w1"] * dims["t1"]) + 3* (dims["h"] * dims["w1"]) - 4 * pi * (0.5*dims["d2"])**2
 
-    A_sunlitside = t2 * w + L * w + 0.5 * pi * (0.5*w)**2 - pi * (0.5*D1)**2
+    A_sunlitside = dims["t2"] * dims["w1"] + dims["L"] * dims["w1"] + 0.5 * pi * (0.5*dims["w1"])**2 - pi * (0.5*dims["d1"])**2
 
-    A_top = h * t2 * 3 + (L + 0.5 * w) * t1
+    A_top = dims["h"] * dims["t2"] * 3 + (dims["L"] + 0.5 * dims["w1"]) * dims["t1"]
 
-    A_inside = L*w+0.5*pi*(0.5*w)**2 - pi*(0.5*D1)**2
+    A_inside = dims["L"]*dims["w1"]+0.5*pi*(0.5*dims["w1"])**2 - pi*(0.5*dims["d1"])**2
 
-    A_back = w * (3*h+2*t1)
+    A_back = dims["w1"] * (3*dims["h"]+2*dims["t1"])
 
     A_total = A_sunlitside*2 + A_top *2 + A_inside * 2 + A_back + A_front
     A_i = A_sunlitside  #projected area
@@ -226,6 +227,7 @@ def bearingstress_everything(dims, lug_material):
         bearing_stress_Tmin = bearing_stress_calculator(current_fastener__total_in_plane_forces, i, dims["t2"], F_T_min)
         bearing_stress_Tmax = bearing_stress_calculator(current_fastener__total_in_plane_forces, i, dims["t2"], F_T_max) 
 
+        """
         print("The bearing stress for fastener number", TESTING_fastener_counter+1, "is:", bearing_stress_Tmin, "-", bearing_stress_Tmax, "\nThe max allowable stress is:", TESTING_stress_allowable, "\n")
         #Check if bearing stress does not exceed allowable stress
         if bearing_stress_Tmax < TESTING_stress_allowable:
@@ -242,6 +244,8 @@ def bearingstress_everything(dims, lug_material):
             print("Failed to compute")
 
         print("The MS for fastener number", TESTING_fastener_counter+1, "is:", (TESTING_stress_allowable/bearing_stress_Tmax)-1)
+        """
+
         fastener_max_stress_list.append((TESTING_stress_allowable/bearing_stress_Tmax)-1)
 
         TESTING_fastener_counter += 1

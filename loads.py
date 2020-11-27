@@ -91,7 +91,7 @@ def wallMomentsLug2(totForces, totMoments, dims):
     F_lugL = wallForcesLug2(totForces, totMoments, dims)
 
     r_pin_2 = np.array([0, dims["L"], -dims["d"]/2]) # Location of the force application point of the lug loads with respect to wall coordinate system
-    r_lugL = np.array([0, dim.r_pin_2[1], 0])
+    r_lugL = np.array([0, r_pin_2[1], 0])
 
     # For moments around Z applied at the end of the adapter, this cannot be split up into a force couple for the two lugs
     # This means that both lugs need to provide for half of the applied Z moment at the end of the adapter

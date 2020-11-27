@@ -10,36 +10,38 @@ import iteration_Bearing as bbb
 import iteration_PullThrough as ccc
 
 
-# Iteration bounds, all dimensions in mm
-w1_start = 30
-w1_end = 50
-w1_step = 1
+# Iteration bounds, all dimensions in m
+w1_start = 25e-3
+w1_end = 35e-3
+w1_step = 5e-3
 
-d1_start = 4
-d1_end = 10
-d1_step = 1
+d1_start = 4e-3
+d1_end = 10e-3
+d1_step = 1e-3
 
-t1_start = 4
-t1_end = 10
-t1_step = 1
+t1_start = 2e-3
+t1_end = 10e-3
+t1_step = 4e-3
 
-t2_start = 4
-t2_end = 10
-t2_step = 1
+t2_start = 4e-3
+t2_end = 10e-3
+t2_step = 1e-3
 
-h_start = 10
-h_end = 20
-h_step = 1
+h_start = 5e-3
+h_end = 15e-3
+h_step = 5e-3
 
 
 mats = [
-    {"name" : "Al_2014_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 123, "E" : 123},
-    {"name" : "Al_2024_T3", "alpha" : 123, "rho" : 123, "sigma_y" : 123, "E" : 123},
-    {"name" : "Al_7075_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 123, "E" : 123}
+    {"name" : "Al_2014_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 414e6, "E" : 72.4e9},
+    {"name" : "Al_2024_T3", "alpha" : 123, "rho" : 123, "sigma_y" : 240e6, "E" : 72.4e9},
+    {"name" : "Al_7075_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 503e6, "E" : 71.7e9}
 ]
 
 
-
+results = []
+min_dim = {}
+min_MSE = 1000000000000000000000000000000
 
 for lug in range(0, 1):
     for mat in mats:
@@ -48,6 +50,13 @@ for lug in range(0, 1):
                 for t1 in np.arange(t1_start, t1_end, t1_step):
                     for t2 in np.arange(t2_start, t2_end, t2_step):
                         for h in np.arange(h_start, h_end, h_step):
+                            # Dimension set validity check
+                            if not (2*d1 < w1):
+                                continue
+
+                            
+
+
                             unrounded_d2 = w1 / 5
 
                             fastener_distances = []
@@ -60,7 +69,7 @@ for lug in range(0, 1):
                                     "w1" : w1,
                                     "w2" : 2*w1 + 2*t1 + h,
                                     "d1" : d1,
-                                    "d2" : math.floor(unrounded_d2),
+                                    "d2" : math.floor(unrounded_d2*1000)/1000,
                                     "t1" : t1,
                                     "t2" : t2,
                                     "h" : h,
@@ -85,7 +94,28 @@ for lug in range(0, 1):
 
                             """Example"""
                             ms = []
-                            ms.append(bbb.bearingstress_everything(dim, mat))
+                            ms.extend(bbb.bearingstress_everything(dim, mat, loads))
                             ms.append(aaa.lug_get_MS(dim, mat, loads))
-                            #ms.append(ccc.get_MS(dim, mat, loads, fastener_distances))
-                            #ms.append(ccc.get_MS(dim, mat, loads))
+                            ms.append(ccc.get_MS(dim, mat, loads, fastener_distances))
+
+                            if min(ms) < 0:
+                                continue
+
+                            results.append(dim)
+                                
+                            MSE = 0
+                            for val in ms:
+                                print(round(val,1), end=' ')
+                                MSE += val**2
+                            print()
+
+                            if (min_MSE > MSE):
+                                min_MSE = MSE
+                                min_dim = dim
+
+print(min_MSE)
+print(min_dim)
+                            
+
+                            
+                            
