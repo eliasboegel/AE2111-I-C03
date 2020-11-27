@@ -63,7 +63,7 @@ def wallMomentsLug1(totForces, totMoments, dims):
     r_pin_1 = np.array([0, dims["L"], dims["d"]/2]) # Location of the force application point of the lug loads with respect to wall coordinate system
 
 
-    F_lugU = wallForcesLug1(totForces, totMoments, dims["d"])
+    F_lugU = wallForcesLug1(totForces, totMoments, dims)
     r_lugU = np.array([0, r_pin_1[1], 0])
 
     M = np.array([0, 0, totMoments[2] / 2])
@@ -88,7 +88,7 @@ def wallForcesLug2(totForces, totMoments, dims):
 
 # Moments that Lug 2 creates on the wall
 def wallMomentsLug2(totForces, totMoments, dims):
-    F_lugL = wallForcesLug2(totForces, totMoments, dims["d"])
+    F_lugL = wallForcesLug2(totForces, totMoments, dims)
 
     r_pin_2 = np.array([0, dims["L"], -dims["d"]/2]) # Location of the force application point of the lug loads with respect to wall coordinate system
     r_lugL = np.array([0, dim.r_pin_2[1], 0])

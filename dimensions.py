@@ -28,5 +28,3 @@ epsilon = 0.05 #emissivity
 
 sc_short_sides = 1.1
 sc_panel_cg_from_center = 6
-
-n_fasteners = 8 # per lug
