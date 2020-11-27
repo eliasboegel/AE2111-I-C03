@@ -6,14 +6,28 @@ from math import sin, cos
 # Input for radial distance for fastener cg to ith fastener
 # d is the distance between the attachment point and the fastener cg
 
-def get_pull_through():
+def get_pull_through(dim,mat,loads):
+  # Example: t1 = dim["t1"]
+  """dim = {
+                                    "w1" : w1,
+                                    "w2" : w2,
+                                    "d1" : d1,
+                                    "d2" : d2,
+                                    "t1" : t1,
+                                    "t2" : t2,
+                                    "h" : h,
+                                    "L" : L,
+                                    "d" : d
+                                }"""
+
+
   h = 8 #mm
 
   rho_out = h/2 + ((40.9**0.5)*((h**0.5)/(2**0.5))) + 20.983148
   rho_in = h/2 + ((22.1**0.5)*((h**0.5)/(2**0.5))) + 12.008
 
-  Fy = # from other file
-  Mx = # from other file
+  Fy = loads["Fy"] # from other file
+  Mx = loads["Mx"] # from other file
 
   n_f_total = 8
   F_pi = Fy/n_f_total
