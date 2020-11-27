@@ -46,12 +46,12 @@ mats = [
 for lug in range(0, 1):
     if lug:
         # Get loads from first lug
-        F # Placeholder
-        M # Placeholder
+        F  = 1# Placeholder
+        M  = 1# Placeholder
     else:
         # Get loads from second lug
-        F # Placeholder
-        M # Placeholder
+        F  = 1# Placeholder
+        M = 1 # Placeholder
 
     for mat in mats:
         for w1 in np.arange(w1_start, w1_end, w1_step):

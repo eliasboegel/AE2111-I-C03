@@ -1,17 +1,19 @@
 import numpy as np
 from math import sin, cos, atan2, pi
-from dimensions import *
+# from dimensions import *
 from fastnerlocations import *
+import design_iteration as di
 
 TESTING_forces_and_moments_temporary_dictionary = {"F_x": -16523, "M_y": 0, "F_z": 4721, "coord_z": w/2, "coord_x": w+t1+(h/2)}
 TESTING_fasteners_list = [{"coord_x": fastcordx_1, "coord_z": fastcordz_1, "diameter": D2}, {"coord_x": fastcordx_2, "coord_z": fastcordz_2, "diameter": D2}, {"coord_x": fastcordx_3, "coord_z": fastcordz_3, "diameter": D2}, {"coord_x": fastcordx_4, "coord_z": fastcordz_4, "diameter": D2}, {"coord_x": fastcordx_5, "coord_z": fastcordz_5, "diameter": D2}, {"coord_x": fastcordx_6, "coord_z": fastcordz_6, "diameter": D2}, {"coord_x": fastcordx_7, "coord_z": fastcordz_7, "diameter": D2}, {"coord_x": fastcordx_8, "coord_z": fastcordz_8, "diameter": D2}]
 TESTING_stress_allowable = matstress_allowable
-TESTING_t2 = t2
+print("matstress", matstress_allowable)
+TESTING_t2 = di.dim["t2"]
 spacecraft_wall_thickness = 4E-3
 
-info_fastener = {"E": 70E9, "diameter": D2, "alpha": 0.05, "Dfo": 0.00678, "Dfi": 0.004} # Fill in with actual values
-lug_E = 70E9
-alpha_clamped_part = 0.08 
+info_fastener = {"E": di.mats[2]["E"], "diameter": D2, "alpha": 0.05, "Dfo": 0.00678, "Dfi": 0.004} # Fill in with actual values
+lug_E = di.mats[2]["E"]
+alpha_clamped_part = di.mats[2]["alpha"] 
 
 
 def CG_calculator(fastener_details_list): # I changed it slightly to take in the data in another form, and into a function
@@ -182,6 +184,7 @@ TESTING_CG = CG_calculator(TESTING_fasteners_list)
 TESTING_equivalent_CG_FM = calculate_equivalent_FM(TESTING_forces_and_moments_temporary_dictionary, TESTING_CG)
 TESTING_common_in_plane_forces = in_plane_force(TESTING_equivalent_CG_FM, len(TESTING_fasteners_list))
 TESTING_fastener_counter = 0
+fastener_max_stress_list = []
 for i in TESTING_fasteners_list:
     current_fastener_in_plane_moment = in_plane_moment(TESTING_equivalent_CG_FM["M_cgy"], TESTING_fasteners_list, TESTING_CG, TESTING_fastener_counter)
     current_fastener__total_in_plane_forces = {"F_in_plane_x": TESTING_common_in_plane_forces["F_in_plane_x"] + current_fastener_in_plane_moment["F_in_plane_x"], "F_in_plane_z": TESTING_common_in_plane_forces["F_in_plane_z"] + current_fastener_in_plane_moment["F_in_plane_z"]}
@@ -205,8 +208,10 @@ for i in TESTING_fasteners_list:
         print("Failed to compute")
 
     print("The MS for fastener number", TESTING_fastener_counter+1, "is:", (TESTING_stress_allowable/bearing_stress_Tmax)-1)
+    fastener_max_stress_list.append((TESTING_stress_allowable/bearing_stress_Tmax)-1)
 
     TESTING_fastener_counter += 1
 
-
+def use_this_to_get_MS():
+    return fastener_max_stress_list
 # Disclaimer: I am absolutely horrible at coming up with variable names. Please feel free to change any of them to whatever actually makes sense... -Kristian

@@ -59,7 +59,7 @@ def wallForcesLug1(totForces, totMoments, d):
 
 # Moments that Lug 1 creates on the wall
 def wallMomentsLug1(totForces, totMoments):
-    F_lugU = wallForcesLug1(totForces, totMoments)
+    F_lugU = wallForcesLug1(totForces, totMoments, 1)
     r_lugU = np.array([0, dim.r_pin_1[1], 0])
 
     M = np.array([0, 0, totMoments[2] / 2])
@@ -84,7 +84,7 @@ def wallForcesLug2(totForces, totMoments, d):
 
 # Moments that Lug 2 creates on the wall
 def wallMomentsLug2(totForces, totMoments):
-    F_lugL = wallForcesLug2(totForces, totMoments)
+    F_lugL = wallForcesLug2(totForces, totMoments, 1)
     r_lugL = np.array([0, dim.r_pin_2[1], 0])
 
     # For moments around Z applied at the end of the adapter, this cannot be split up into a force couple for the two lugs
@@ -108,11 +108,11 @@ print(F_tot_launch)
 print(M_tot_launch)
 print()
 print("Total forces and moments on lug 1 for launch situation")
-print(wallForcesLug1(F_tot_launch, M_tot_launch))
+print(wallForcesLug1(F_tot_launch, M_tot_launch, 1))
 print(wallMomentsLug1(F_tot_launch, M_tot_launch))
 print()
 print("Total forces and moments on lug 2 for launch situation")
-print(wallForcesLug2(F_tot_launch, M_tot_launch))
+print(wallForcesLug2(F_tot_launch, M_tot_launch, 1))
 print(wallMomentsLug2(F_tot_launch, M_tot_launch))
 print()
 print()
@@ -122,9 +122,9 @@ print(F_tot_orbit)
 print(M_tot_orbit)
 print()
 print("Total forces and moments on lug 1 for orbit situation")
-print(wallForcesLug1(F_tot_orbit, M_tot_orbit))
+print(wallForcesLug1(F_tot_orbit, M_tot_orbit, 1))
 print(wallMomentsLug1(F_tot_orbit, M_tot_orbit))
 print()
 print("Total forces and moments on lug 2 for orbit situation")
-print(wallForcesLug2(F_tot_orbit, M_tot_orbit))
+print(wallForcesLug2(F_tot_orbit, M_tot_orbit, 1))
 print(wallMomentsLug2(F_tot_orbit, M_tot_orbit))
