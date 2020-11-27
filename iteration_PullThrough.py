@@ -50,7 +50,7 @@ def get_MS(dim,mat,loads):
   ratio3 = tau_yield / stress_t3_V
   #ratio0 = tau_yield / stress_V_tot
 
-  print(ratio1,ratio2,ratio3,ratio0)
+  # print(ratio1,ratio2,ratio3, ratio0)
   MS = min(ratio1,ratio2,ratio3)-1
 
   if ratio1 >=1:

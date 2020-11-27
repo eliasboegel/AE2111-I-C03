@@ -81,7 +81,8 @@ for lug in range(0, 1):
                             """Example"""
                             ms = []
                             bbb.bearingstress_everything(d2, t2, mat)
-                            ms.list(aaa.lug_get_MS(dim, mat, loads))
+                            ms.append(aaa.lug_get_MS(dim, mat, loads))
+                            ms.append(ccc.get_MS(dim, mat, loads))
                             # call all the checks from here, using F, M, dim and mat
                             # F is a dictionary, forces at the wall, center of lug, with components Fx, Fy, Fz
                             # M is a dictionary, moments at the wall, center of lug, with components Mx, My, Mz
