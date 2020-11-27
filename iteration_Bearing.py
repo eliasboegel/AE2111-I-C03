@@ -6,6 +6,38 @@ from fastnerlocations import *
 
 def bearingstress_everything(dims, lug_material):
 
+    """ Fastener coordinates"""
+    e1 = 1.5*dims["w1"] / 5
+    e2 = e2
+
+    #take bottom right as 0 point
+    #fasteners x z coordinates on righthandside of the lug
+    fastcordx_1 = e2
+    fastcordz_1 = e1
+
+    fastcordx_2 = e2
+    fastcordz_2 = dims["w1"]-e1
+
+    fastcordx_3 = dims["w1"]-e2
+    fastcordz_3 = e1
+
+    fastcordx_4 = dims["w1"]-e2
+    fastcordz_4 = dims["w1"]-e1
+
+    #fasteners x z location on left handside of the lug
+    fastcordx_5 = dims["w1"]+dims["h"]+2*dims["t1"]+e2
+    fastcordz_5 = e1
+
+    fastcordx_6 = dims["w1"]+dims["h"]+2*dims["t1"]+e2
+    fastcordz_6 = dims["w1"]-e1
+
+    fastcordx_7 = 2*dims["w1"]+dims["h"]+2*dims["t1"]-e2
+    fastcordz_7 = e1
+
+    fastcordx_8 = 2*dims["w1"]+dims["h"]+2*dims["t1"]-e2
+    fastcordz_8 = dims["w1"]-e1
+
+
     TESTING_forces_and_moments_temporary_dictionary = {"F_x": -16523, "M_y": 0, "F_z": 4721, "coord_z": w/2, "coord_x": w+t1+(h/2)}
     TESTING_fasteners_list = [{"coord_x": fastcordx_1, "coord_z": fastcordz_1, "diameter": dims["d2"]}, {"coord_x": fastcordx_2, "coord_z": fastcordz_2, "diameter": dims["d2"]}, {"coord_x": fastcordx_3, "coord_z": fastcordz_3, "diameter": dims["d2"]}, {"coord_x": fastcordx_4, "coord_z": fastcordz_4, "diameter": dims["d2"]}, {"coord_x": fastcordx_5, "coord_z": fastcordz_5, "diameter": dims["d2"]}, {"coord_x": fastcordx_6, "coord_z": fastcordz_6, "diameter": dims["d2"]}, {"coord_x": fastcordx_7, "coord_z": fastcordz_7, "diameter": dims["d2"]}, {"coord_x": fastcordx_8, "coord_z": fastcordz_8, "diameter": dims["d2"]}]
     TESTING_stress_allowable = matstress_allowable
