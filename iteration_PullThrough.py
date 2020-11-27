@@ -4,8 +4,13 @@ import task48_9 as ddd
 def get_MS(dim,mat,loads):
 
   #calculating the normal stress
-  D_fo =   #diameter of fastener head in m
   D_fi = dim["D2"]  #inner diameter in m
+  if D_fi < 0.005:
+    D_fo = 0.007
+  else:
+    D_fo = 1.75*D_fi #diameter of fastener head in m
+    return D_fo
+
   r_fo = D_fo / 2
   r_fi = D_fi / 2
 
@@ -23,17 +28,17 @@ def get_MS(dim,mat,loads):
   A_t1_ap = pi * t1 * D_fi  #area of the attached parts of t1
   stress_t1_V = F_y / A_t1_ap
 
-  print('shearstress in t1 = ', stress_t1_V)
+  print('shear stress in t1 = ', stress_t1_V)
 
   #calculating shear stress for t2
   t2 = dim["t2"]  #m
   A_t2_ap = pi * t2 * D_fi  #area of the attached parts of t2
   stress_t2_V = F_y / A_t2_ap
 
-  print('shearstress in t2 = ', stress_t2_V)
+  print('shear stress in t2 = ', stress_t2_V)
 
   #calculating shear stress for t3
-  t3 = 0.004  #mm calculacted earlier in the report WP4
+  t3 = 0.004  #mm calculated earlier in the report WP4
   A_t3_ap = pi * t3 * D_fi  #area of the attached parts of t3
   stress_t3_V = F_y / A_t3_ap
 
