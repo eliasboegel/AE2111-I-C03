@@ -4,8 +4,8 @@ import task48_9 as ddd
 def get_MS(dim,mat,loads):
 
   #calculating the normal stress
-  D_fo = dim["D2"]  #outer diameter in mm
-  D_fi = dim["D1"]  #inner diameter in mm
+  D_fo =   #diameter of fastener head in m
+  D_fi = dim["D2"]  #inner diameter in m
   r_fo = D_fo / 2
   r_fi = D_fi / 2
 
@@ -26,24 +26,24 @@ def get_MS(dim,mat,loads):
   print('shearstress in t1 = ', stress_t1_V)
 
   #calculating shear stress for t2
-  t2 = dim["t2"]  #mm this value is calculated earlier
+  t2 = dim["t2"]  #m
   A_t2_ap = pi * t2 * D_fi  #area of the attached parts of t2
   stress_t2_V = F_y / A_t2_ap
 
   print('shearstress in t2 = ', stress_t2_V)
 
   #calculating shear stress for t3
-  t3 = 4  #mm calculacted earlier in the report WP4
+  t3 = 0.004  #mm calculacted earlier in the report WP4
   A_t3_ap = pi * t3 * D_fi  #area of the attached parts of t3
   stress_t3_V = F_y / A_t3_ap
 
-  print('shearstress in t3 = ', stress_t3_V)
+  print('shear stress in t3 = ', stress_t3_V)
 
   #total shear stress
 
   stress_V_tot = stress_t1_V + stress_t2_V + stress_t3_V
 
-  print('total shearstress = ', stress_V_tot)
+  print('total shear stress = ', stress_V_tot)
 
   #Comparison to yield stress, failure if <1
   tau_yield = mat["sigma_y"]

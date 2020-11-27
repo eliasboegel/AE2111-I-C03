@@ -15,7 +15,7 @@ def get_pull_through(dim,mat,loads,distances):
   n_f_total = 8
   F_pi = Fy/n_f_total
 
-  diameter_hole = dim["d2"] #mm
+  diameter_hole = dim["d2"] #m
   radius_hole = diameter_hole /2
   Ai= pi * radius_hole**2 #area of the fastener cross section
 
