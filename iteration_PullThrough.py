@@ -1,7 +1,6 @@
 from math import pi
 import task48_9 as ddd
 
-# test
 def get_MS(dim,mat,loads):
 
   #calculating the normal stress
