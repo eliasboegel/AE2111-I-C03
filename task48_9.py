@@ -29,7 +29,7 @@ def get_pull_through(dim,mat,loads,distances):
 
   #find sum of the outer fasteners: Ai * ri^2
   n_f_out = 4 #n_f_out is the number of outer fasteners
-  rho_out = int(rho_out) #radial distance to the fastener cg of the inner fasteners
+  #rho_out = int(rho_out) #radial distance to the fastener cg of the inner fasteners
   Sum_Ai_rho2_out = 0
   # Arho2_out = Ai * rho_out**2  might not be necessary
   for h in range(n_f_out):
@@ -45,7 +45,7 @@ def get_pull_through(dim,mat,loads,distances):
   B = totSum_Ai_rho2
   Fp_Mx_outerlower = (A/B)
   F_pullthrough_outerlower = Fp_Mx_outerlower + F_pi
-  print('pull-through load of the outer lower fasteners =', F_pullthrough_outerlower)
+  #print('pull-through load of the outer lower fasteners =', F_pullthrough_outerlower)
 
 
   # Fp_Mx for inner lower fasteners
@@ -53,7 +53,7 @@ def get_pull_through(dim,mat,loads,distances):
   D = totSum_Ai_rho2
   Fp_Mx_innerlower = (C/D)
   F_pullthrough_innerlower = Fp_Mx_innerlower + F_pi
-  print('pull-through load of the inner lower fasteners =', F_pullthrough_innerlower)
+  #print('pull-through load of the inner lower fasteners =', F_pullthrough_innerlower)
 
 
   # Fp_Mx for outer upper fasteners
@@ -61,7 +61,7 @@ def get_pull_through(dim,mat,loads,distances):
   B = totSum_Ai_rho2
   Fp_Mx_outerupper = (A/B)
   F_pullthrough_outerupper = Fp_Mx_outerupper + F_pi
-  print('pull-through load of the outer upper fasteners =', F_pullthrough_outerupper)
+  #print('pull-through load of the outer upper fasteners =', F_pullthrough_outerupper)
 
 
   # Fp_Mx for inner upper fasteners
@@ -69,7 +69,7 @@ def get_pull_through(dim,mat,loads,distances):
   D = totSum_Ai_rho2
   Fp_Mx_innerupper = (C/D)
   F_pullthrough_innerupper = Fp_Mx_innerupper + F_pi
-  print('pull-through load of the inner upper fasteners =',F_pullthrough_innerupper)
+  #print('pull-through load of the inner upper fasteners =',F_pullthrough_innerupper)
 
   return max(F_pullthrough_outerlower, F_pullthrough_innerlower, F_pullthrough_outerupper, F_pullthrough_innerupper)
 
