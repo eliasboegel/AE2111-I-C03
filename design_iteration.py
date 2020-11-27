@@ -1,7 +1,8 @@
 import numpy as np
-import 4.3_lug as aaa
+import iteration_Latch as aaa
+import iteration_Bearing as bbb
+import iteration_PullThrough as ccc
 import loads
-import 4.5 as fourFive
 
 # Iteration bounds, all dimensions in mm
 w1_start = 0
@@ -41,18 +42,23 @@ mats = [
     {"name" : "Al_7075_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 123, "E" : 123}
 ]
 
-loads = {"Fx": loads[0], "Fy": loads[1], "Fz": loads[2]}
-    
+
+totF = np.maximum(loads.F_tot_launch, loads.F_tot_launch)
+totM = np.maximum(loads.totMomentsLaunch, loads.totMomentsOrbit)
 
 for lug in range(0, 1):
+    
     if lug:
         # Get loads from first lug
-        F  = 1# Placeholder
-        M  = 1# Placeholder
+        F  = loads.wallForcesLug1(totF, totM)
+        M  = loads.wallMomentsLug1(totF, totM)
+        
     else:
         # Get loads from second lug
-        F  = 1# Placeholder
-        M = 1 # Placeholder
+        F  = loads.wallForcesLug2(totF, totM)
+        M  = loads.wallMomentsLug2(totF, totM)
+
+    loads = {"Fx": F[0], "Fy": F[1], "Fz": F[2], "Mx" : M[0], "My" : M[1], "Mz" : M[2]}
 
     for mat in mats:
         for w1 in np.arange(w1_start, w1_end, w1_step):
@@ -73,8 +79,8 @@ for lug in range(0, 1):
                                 }
 
                             """Example"""
-                            ms_43 = aaa.lug_get_MS(dim, mat, loads)
-                            ms_45 = 45.use_this_to_get_MS()
+                            ms = []
+                            ms.list(aaa.lug_get_MS(dim, mat, loads))
                             # call all the checks from here, using F, M, dim and mat
                             # F is a dictionary, forces at the wall, center of lug, with components Fx, Fy, Fz
                             # M is a dictionary, moments at the wall, center of lug, with components Mx, My, Mz
