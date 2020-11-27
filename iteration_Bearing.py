@@ -4,13 +4,12 @@ from math import sin, cos, atan2, pi
 from fastnerlocations import *
 
 
-def bearingstress_everything(dims, d2, lug_material):
+def bearingstress_everything(dims, lug_material):
 
     TESTING_forces_and_moments_temporary_dictionary = {"F_x": -16523, "M_y": 0, "F_z": 4721, "coord_z": w/2, "coord_x": w+t1+(h/2)}
     TESTING_fasteners_list = [{"coord_x": fastcordx_1, "coord_z": fastcordz_1, "diameter": dims["d2"]}, {"coord_x": fastcordx_2, "coord_z": fastcordz_2, "diameter": dims["d2"]}, {"coord_x": fastcordx_3, "coord_z": fastcordz_3, "diameter": dims["d2"]}, {"coord_x": fastcordx_4, "coord_z": fastcordz_4, "diameter": dims["d2"]}, {"coord_x": fastcordx_5, "coord_z": fastcordz_5, "diameter": dims["d2"]}, {"coord_x": fastcordx_6, "coord_z": fastcordz_6, "diameter": dims["d2"]}, {"coord_x": fastcordx_7, "coord_z": fastcordz_7, "diameter": dims["d2"]}, {"coord_x": fastcordx_8, "coord_z": fastcordz_8, "diameter": dims["d2"]}]
     TESTING_stress_allowable = matstress_allowable
     print("matstress", matstress_allowable)
-    dims["t2"] = dims["t2"]
     spacecraft_wall_thickness = 4E-3
 
     info_fastener = {"E": 113.8E9, "diameter": dims["d2"], "alpha": 8.6E-6, "Dfo": 0.00678, "Dfi": 0.004} # Fill in with actual values
