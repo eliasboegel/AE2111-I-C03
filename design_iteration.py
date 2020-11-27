@@ -40,18 +40,23 @@ mats = [
     {"name" : "Al_7075_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 123, "E" : 123}
 ]
 
-loads = {"Fx": loads[0], "Fy": loads[1], "Fz": loads[2]}
-    
+
+totF = np.maximum(loads.F_tot_launch, loads.F_tot_launch)
+totM = np.maximum(loads.totMomentsLaunch, loads.totMomentsOrbit)
 
 for lug in range(0, 1):
+    
     if lug:
         # Get loads from first lug
-        F  = 1# Placeholder
-        M  = 1# Placeholder
+        F  = loads.wallForcesLug1(totF, totM)
+        M  = loads.wallMomentsLug1(totF, totM)
+        
     else:
         # Get loads from second lug
-        F  = 1# Placeholder
-        M = 1 # Placeholder
+        F  = loads.wallForcesLug2(totF, totM)
+        M  = loads.wallMomentsLug2(totF, totM)
+
+    loads = {"Fx": F[0], "Fy": F[1], "Fz": F[2], "Mx" : M[0], "My" : M[1], "Mz" : M[2]}
 
     for mat in mats:
         for w1 in np.arange(w1_start, w1_end, w1_step):
