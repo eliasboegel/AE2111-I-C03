@@ -85,7 +85,7 @@ for lug in range(0, 1):
 
                             """Example"""
                             ms = []
-                            ms.append(bbb.bearingstress_everything(dim["d2"], dim["t2"], mat))
+                            ms.append(bbb.bearingstress_everything(dim, mat))
                             ms.append(aaa.lug_get_MS(dim, mat, loads))
                             #ms.append(ccc.get_MS(dim, mat, loads, fastener_distances))
                             #ms.append(ccc.get_MS(dim, mat, loads))
