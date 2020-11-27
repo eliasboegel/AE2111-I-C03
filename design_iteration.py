@@ -98,8 +98,8 @@ for lug in range(0, 1):
                             ms.append(aaa.lug_get_MS(dim, mat, loads))
                             ms.append(ccc.get_MS(dim, mat, loads, fastener_distances))
 
-                            #if not min(ms) > 0:
-                            #    continue
+                            if min(ms) < 0:
+                                continue
 
                             results.append(dim)
                                 
