@@ -1,7 +1,5 @@
 import numpy as np
 from math import sin, cos, atan2, pi
-# from dimensions import *
-from fastnerlocations import *
 
 
 def bearingstress_everything(dims, lug_material):
