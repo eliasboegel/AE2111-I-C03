@@ -1,5 +1,5 @@
 import numpy as np
-
+import 4.3_lug as aaa
 import loads
 
 # Iteration bounds, all dimensions in mm
@@ -40,7 +40,7 @@ mats = [
     {"name" : "Al_7075_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 123, "E" : 123}
 ]
 
-
+loads = {"Fx": loads[0], "Fy": loads[1], "Fz": loads[2]}
     
 
 for lug in range(0, 1):
@@ -71,6 +71,8 @@ for lug in range(0, 1):
                                     "d" : d
                                 }
 
+                            """Example"""
+                            ms_43 = aaa.lug_get_MS(dim, mat, loads)
                             # call all the checks from here, using F, M, dim and mat
                             # F is a dictionary, forces at the wall, center of lug, with components Fx, Fy, Fz
                             # M is a dictionary, moments at the wall, center of lug, with components Mx, My, Mz
