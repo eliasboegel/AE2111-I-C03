@@ -20,12 +20,6 @@ def get_pull_through(dim,mat,loads):
                                     "d" : d
                                 }"""
 
-
-  h = 8 #mm
-
-  rho_out = h/2 + ((40.9**0.5)*((h**0.5)/(2**0.5))) + 20.983148
-  rho_in = h/2 + ((22.1**0.5)*((h**0.5)/(2**0.5))) + 12.008
-
   Fy = loads["Fy"] # from other file
   Mx = loads["Mx"] # from other file
 
