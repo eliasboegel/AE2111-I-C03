@@ -1,4 +1,4 @@
-from math import sin, cos
+from math import pi
 # F_tot is the total applied force to the fastener pattern 
 # centre of gravity to the F_tot original location
 # x_n is the fastener number (i.e fastener 2 -> x_n=2)
@@ -6,33 +6,16 @@ from math import sin, cos
 # Input for radial distance for fastener cg to ith fastener
 # d is the distance between the attachment point and the fastener cg
 
-def get_pull_through(dim,mat,loads):
-  # Example: t1 = dim["t1"]
-  """dim = {
-                                    "w1" : w1,
-                                    "w2" : w2,
-                                    "d1" : d1,
-                                    "d2" : d2,
-                                    "t1" : t1,
-                                    "t2" : t2,
-                                    "h" : h,
-                                    "L" : L,
-                                    "d" : d
-                                }"""
-
-
-  h = 8 #mm
-
-  rho_out = h/2 + ((40.9**0.5)*((h**0.5)/(2**0.5))) + 20.983148
-  rho_in = h/2 + ((22.1**0.5)*((h**0.5)/(2**0.5))) + 12.008
-
+def get_pull_through(dim,mat,loads,distances):
   Fy = loads["Fy"] # from other file
   Mx = loads["Mx"] # from other file
+  rho_out = distances[1]
+  rho_in = distances[0]
 
   n_f_total = 8
   F_pi = Fy/n_f_total
 
-  diameter_hole = 4 #mm
+  diameter_hole = dim["d2"] #mm
   radius_hole = diameter_hole /2
   Ai= pi * radius_hole**2 #area of the fastener cross section
 
@@ -62,7 +45,7 @@ def get_pull_through(dim,mat,loads):
   B = totSum_Ai_rho2
   Fp_Mx_outerlower = (A/B)
   F_pullthrough_outerlower = Fp_Mx_outerlower + F_pi
-  print('pull-through load of the outer lower fasteners =',F_pullthrough_outerlower)
+  print('pull-through load of the outer lower fasteners =', F_pullthrough_outerlower)
 
 
   # Fp_Mx for inner lower fasteners
@@ -70,7 +53,7 @@ def get_pull_through(dim,mat,loads):
   D = totSum_Ai_rho2
   Fp_Mx_innerlower = (C/D)
   F_pullthrough_innerlower = Fp_Mx_innerlower + F_pi
-  print('pull-through load of the inner lower fasteners =',F_pullthrough_innerlower)
+  print('pull-through load of the inner lower fasteners =', F_pullthrough_innerlower)
 
 
   # Fp_Mx for outer upper fasteners
@@ -78,7 +61,7 @@ def get_pull_through(dim,mat,loads):
   B = totSum_Ai_rho2
   Fp_Mx_outerupper = (A/B)
   F_pullthrough_outerupper = Fp_Mx_outerupper + F_pi
-  print('pull-through load of the outer upper fasteners =',F_pullthrough_outerupper)
+  print('pull-through load of the outer upper fasteners =', F_pullthrough_outerupper)
 
 
   # Fp_Mx for inner upper fasteners
