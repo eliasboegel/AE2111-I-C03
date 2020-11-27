@@ -15,7 +15,7 @@ def bearingstress_everything(d2, t2, lug_material):
 
     info_fastener = {"E": 113.8E9, "diameter": d2, "alpha": 8.6E-6, "Dfo": 0.00678, "Dfi": 0.004} # Fill in with actual values
     lug_E = lug_material["E"]
-    alpha_clamped_part = di.mats[2]["alpha"] 
+    alpha_clamped_part = lug_material
 
 
     def CG_calculator(fastener_details_list): # I changed it slightly to take in the data in another form, and into a function

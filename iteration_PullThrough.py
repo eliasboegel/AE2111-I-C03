@@ -1,6 +1,6 @@
 from math import pi
 
-def get_MS(dim,mat,loads)
+def get_MS(dim,mat,loads):
 
   #calculating the normal stress
   D_fo = dim["D2"] #outer diameter in mm
@@ -72,4 +72,4 @@ def get_MS(dim,mat,loads)
     #print("SAFE")
   #else:
         #print("FAIL")
-return MS
+  return MS
