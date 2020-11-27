@@ -7,26 +7,15 @@ from math import sin, cos
 # d is the distance between the attachment point and the fastener cg
 
 def get_pull_through(dim,mat,loads):
-  # Example: t1 = dim["t1"]
-  """dim = {
-                                    "w1" : w1,
-                                    "w2" : w2,
-                                    "d1" : d1,
-                                    "d2" : d2,
-                                    "t1" : t1,
-                                    "t2" : t2,
-                                    "h" : h,
-                                    "L" : L,
-                                    "d" : d
-                                }"""
-
   Fy = loads["Fy"] # from other file
   Mx = loads["Mx"] # from other file
+  rho_out =
+  rho_in =
 
   n_f_total = 8
   F_pi = Fy/n_f_total
 
-  diameter_hole = 4 #mm
+  diameter_hole = dim["d2"] #mm
   radius_hole = diameter_hole /2
   Ai= pi * radius_hole**2 #area of the fastener cross section
 
