@@ -1,7 +1,7 @@
 import numpy as np
 import 4.3_lug as aaa
 import loads
-import 4.5 as 45
+import 4.5 as fourFive
 
 # Iteration bounds, all dimensions in mm
 w1_start = 0
@@ -74,6 +74,7 @@ for lug in range(0, 1):
 
                             """Example"""
                             ms_43 = aaa.lug_get_MS(dim, mat, loads)
+                            ms_45 = 45.use_this_to_get_MS()
                             # call all the checks from here, using F, M, dim and mat
                             # F is a dictionary, forces at the wall, center of lug, with components Fx, Fy, Fz
                             # M is a dictionary, moments at the wall, center of lug, with components Mx, My, Mz
