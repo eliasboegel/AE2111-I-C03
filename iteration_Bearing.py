@@ -6,7 +6,7 @@ def bearingstress_everything(dims, lug_material):
 
     """ Fastener coordinates"""
     e1 = 1.5*dims["w1"] / 5
-    e2 = e2
+    e2 = e1
 
     #take bottom right as 0 point
     #fasteners x z coordinates on righthandside of the lug
