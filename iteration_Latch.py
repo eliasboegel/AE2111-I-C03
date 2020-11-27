@@ -55,7 +55,6 @@ Al_2014_T6 = Material(382000000, 2800)
 Al_2024_T3 = Material(310000000, 2765)
 Al_7075_T6 = Material(444500000, 2800)
 
-
 def curve_transverse(x):
     """input is A_av/A_br, output is stress concentration factor"""
     y = 2.546639 + (-0.0006606586 - 2.546639)/(1 + (x/1.39298)**1.134334)  # curve fit to curve 3 Fig. D1:13
