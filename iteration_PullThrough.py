@@ -9,7 +9,6 @@ def get_MS(dim, mat, loads, distances):
         D_fo = 0.007
     else:
         D_fo = 1.75 * D_fi
-        return D_fo  # fastener head diameter
 
     r_fo = D_fo / 2
     r_fi = D_fi / 2
@@ -48,15 +47,15 @@ def get_MS(dim, mat, loads, distances):
 
     # total shear stress
 
-    stress_v_tot = stress_t1_V + stress_t2_V + stress_t3_V
+    # stress_v_tot = stress_t1_V + stress_t2_V + stress_t3_V
 
     # print('total shear stress = ', stress_V_tot)
 
     # Comparison to yield stress, failure if <1
     tau_yield = mat["sigma_y"]
-    ratio1 = tau_yield / stress_t1_V
-    ratio2 = tau_yield / stress_t2_V
-    ratio3 = tau_yield / stress_t3_V
+    ratio1 = tau_yield / abs(stress_t1_V)
+    ratio2 = tau_yield / abs(stress_t2_V)
+    ratio3 = tau_yield / abs(stress_t3_V)
     # ratio0 = tau_yield / stress_v_tot
 
     # print(ratio1,ratio2,ratio3, ratio0)

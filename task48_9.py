@@ -71,5 +71,5 @@ def get_pull_through(dim,mat,loads,distances):
   F_pullthrough_innerupper = Fp_Mx_innerupper + F_pi
   #print('pull-through load of the inner upper fasteners =',F_pullthrough_innerupper)
 
-  return max(F_pullthrough_outerlower, F_pullthrough_innerlower, F_pullthrough_outerupper, F_pullthrough_innerupper)
+  return max(abs(F_pullthrough_outerlower), abs(F_pullthrough_innerlower), abs(F_pullthrough_outerupper), abs(F_pullthrough_innerupper))
 

@@ -46,6 +46,7 @@ def bearingstress_everything(dims, lug_material, loads):
     info_fastener = {"E": 113.8E9, "diameter": dims["d2"], "alpha": 8.6E-6, "Dfo": 0.00678, "Dfi": 0.004} # Fill in with actual values
     lug_E = lug_material["E"]
     alpha_clamped_part = lug_material["alpha"]
+    #alpha_clamped_part = 8.6E-6
 
 
     def CG_calculator(fastener_details_list): # I changed it slightly to take in the data in another form, and into a function
@@ -183,10 +184,10 @@ def bearingstress_everything(dims, lug_material, loads):
     #Q_absorbed = alpha * J_s * A_i + alpha * J_a * A_i + epsilon * J_ir * A_i
 
     #for earth
-    Q_absorbed_earth = absorb_alpha * J_searth * A_i + alpha * J_aearth * A_i + epsilon * J_irearth * A_i
+    Q_absorbed_earth = absorb_alpha * J_searth * A_i + absorb_alpha * J_aearth * A_i + epsilon * J_irearth * A_i
 
     #for Jupiter
-    Q_absorbed_jupiter = absorb_alpha*J_sjupiter*A_i + alpha*J_ajupiter*A_i + epsilon*J_irjupiter*A_i
+    Q_absorbed_jupiter = absorb_alpha*J_sjupiter*A_i + absorb_alpha*J_ajupiter*A_i + epsilon*J_irjupiter*A_i
 
     if Q_absorbed_earth > Q_absorbed_jupiter:
         Q_absorbed_max = Q_absorbed_earth
@@ -246,7 +247,7 @@ def bearingstress_everything(dims, lug_material, loads):
         print("The MS for fastener number", TESTING_fastener_counter+1, "is:", (TESTING_stress_allowable/bearing_stress_Tmax)-1)
         """
 
-        fastener_max_stress_list.append((TESTING_stress_allowable/bearing_stress_Tmax)-1)
+        fastener_max_stress_list.append((TESTING_stress_allowable/abs(bearing_stress_Tmax))-1)
 
         TESTING_fastener_counter += 1
 

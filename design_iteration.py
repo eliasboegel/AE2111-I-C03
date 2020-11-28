@@ -33,15 +33,15 @@ h_step = 5e-3
 
 
 mats = [
-    {"name" : "Al_2014_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 414e6, "E" : 72.4e9},
-    {"name" : "Al_2024_T3", "alpha" : 123, "rho" : 123, "sigma_y" : 240e6, "E" : 72.4e9},
-    {"name" : "Al_7075_T6", "alpha" : 123, "rho" : 123, "sigma_y" : 503e6, "E" : 71.7e9}
+    {"name" : "Al_2014_T6", "alpha" : 23e-6, "rho" : 2800, "sigma_y" : 414e6, "E" : 72.4e9},
+    #{"name" : "Al_2024_T3", "alpha" : 23.2e-6, "rho" : 2780, "sigma_y" : 240e6, "E" : 72.4e9},
+    #{"name" : "Al_7075_T6", "alpha" : 23.6e-6, "rho" : 2810, "sigma_y" : 503e6, "E" : 71.7e9}
 ]
 
 
 results = []
 min_dim = {}
-min_MSE = 1000000000000000000000000000000
+min_m = 1000000000000000000000000000000
 
 for lug in range(0, 1):
     for mat in mats:
@@ -77,44 +77,64 @@ for lug in range(0, 1):
                                     "d" : 2.2 - w1
                                 }
 
-                            totF = np.maximum(ld.totForcesLaunch(), ld.totForcesOrbit())
-                            totM = np.maximum(ld.totMomentsLaunch(), ld.totMomentsOrbit(dim))
+
+                            totF_L = ld.totForcesLaunch()
+                            totF_O = ld.totForcesOrbit()
+
+                            totM_L = ld.totMomentsLaunch()
+                            totM_O = ld.totMomentsOrbit(dim)
 
                             if lug:
                                 # Get loads from first lug
-                                F  = ld.wallForcesLug1(totF, totM, dim)
-                                M  = ld.wallMomentsLug1(totF, totM, dim)
-        
+                                F_L  = ld.wallForcesLug1(totF_L, totM_L, dim)
+                                M_L  = ld.wallMomentsLug1(totF_L, totM_L, dim)
+                                F_O  = ld.wallForcesLug1(totF_O, totM_O, dim)
+                                M_O  = ld.wallMomentsLug1(totF_O, totM_O, dim)
                             else:
                                 # Get loads from second lug
-                                F  = ld.wallForcesLug2(totF, totM, dim)
-                                M  = ld.wallMomentsLug2(totF, totM, dim)
+                                F_L  = ld.wallForcesLug2(totF_L, totM_L, dim)
+                                M_L  = ld.wallMomentsLug2(totF_L, totM_L, dim)
+                                F_O  = ld.wallForcesLug2(totF_O, totM_O, dim)
+                                M_O  = ld.wallMomentsLug2(totF_O, totM_O, dim)
 
-                            loads = {"Fx": F[0], "Fy": F[1], "Fz": F[2], "Mx" : M[0], "My" : M[1], "Mz" : M[2]}
+                            loads_L = {"Fx": F_L[0], "Fy": F_L[1], "Fz": F_L[2], "Mx" : M_L[0], "My" : M_L[1], "Mz" : M_L[2]}
+                            loads_O = {"Fx": F_O[0], "Fy": F_O[1], "Fz": F_O[2], "Mx" : M_O[0], "My" : M_O[1], "Mz" : M_O[2]}
+
+
 
                             """Example"""
                             ms = []
-                            ms.extend(bbb.bearingstress_everything(dim, mat, loads))
-                            ms.append(aaa.lug_get_MS(dim, mat, loads))
-                            ms.append(ccc.get_MS(dim, mat, loads, fastener_distances))
+                            ms.extend(bbb.bearingstress_everything(dim, mat, loads_L))
+                            ms.append(aaa.lug_get_MS(dim, mat, loads_L))
+                            ms.append(ccc.get_MS(dim, mat, loads_L, fastener_distances))
+                            ms.extend(bbb.bearingstress_everything(dim, mat, loads_O))
+                            ms.append(aaa.lug_get_MS(dim, mat, loads_O))
+                            ms.append(ccc.get_MS(dim, mat, loads_O, fastener_distances))
+
 
                             if min(ms) < 0:
                                 continue
 
-                            results.append(dim)
-                                
-                            MSE = 0
+                            
+                            V_backplate = dim["w2"]*dim["w1"]*dim["t2"] - 8 * math.pi * (dim["d2"] / 2)**2 * dim["t2"]
+                            V_latch = (dim["L"]-dim["t2"])*dim["w1"]*dim["t1"] + math.pi * (dim["w1"]/2)**2 / 2 - math.pi * (dim["d1"]/2)**2
+                            m = mat["rho"] * (V_backplate + 2*V_latch)
+                            if not m > 0:
+                                continue
+
                             for val in ms:
                                 print(round(val,1), end=' ')
-                                MSE += val**2
-                            print()
+                            print(round(m, 3))
 
-                            if (min_MSE > MSE):
-                                min_MSE = MSE
+                            if (min_m > m):
+                                min_m = m
                                 min_dim = dim
 
-print(min_MSE)
+                            results.append(dim)
+
+
 print(min_dim)
+print(min_m)
                             
 
                             
