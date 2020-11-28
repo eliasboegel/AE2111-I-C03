@@ -11,31 +11,31 @@ import iteration_PullThrough as ccc
 
 
 # Iteration bounds, all dimensions in m
-w1_start = 25e-3
-w1_end = 35e-3
-w1_step = 5e-3
+w1_start = 20e-3
+w1_end = 40e-3
+w1_step = 1e-3
 
-d1_start = 4e-3
-d1_end = 10e-3
+d1_start = 2e-3
+d1_end = 15e-3
 d1_step = 1e-3
 
-t1_start = 2e-3
+t1_start = 1e-3
 t1_end = 10e-3
-t1_step = 4e-3
+t1_step = 1e-3
 
-t2_start = 4e-3
+t2_start = 1e-3
 t2_end = 10e-3
 t2_step = 1e-3
 
 h_start = 5e-3
-h_end = 15e-3
-h_step = 5e-3
+h_end = 40e-3
+h_step = 1e-3
 
 
 mats = [
     {"name" : "Al_2014_T6", "alpha" : 23e-6, "rho" : 2800, "sigma_y" : 414e6, "E" : 72.4e9},
-    #{"name" : "Al_2024_T3", "alpha" : 23.2e-6, "rho" : 2780, "sigma_y" : 240e6, "E" : 72.4e9},
-    #{"name" : "Al_7075_T6", "alpha" : 23.6e-6, "rho" : 2810, "sigma_y" : 503e6, "E" : 71.7e9}
+    {"name" : "Al_2024_T3", "alpha" : 23.2e-6, "rho" : 2780, "sigma_y" : 240e6, "E" : 72.4e9},
+    {"name" : "Al_7075_T6", "alpha" : 23.6e-6, "rho" : 2810, "sigma_y" : 503e6, "E" : 71.7e9}
 ]
 
 
