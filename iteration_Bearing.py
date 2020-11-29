@@ -40,21 +40,19 @@ def bearingstress_everything(dims, lug_material, loads):
     TESTING_forces_and_moments_temporary_dictionary = {"F_x": loads["Fx"], "M_y": loads["My"], "F_z": loads["Fz"], "coord_z": dims["w1"]/2, "coord_x": dims["w1"]+dims["t1"]+(dims["h"]/2)}
     TESTING_fasteners_list = [{"coord_x": fastcordx_1, "coord_z": fastcordz_1, "diameter": dims["d2"]}, {"coord_x": fastcordx_2, "coord_z": fastcordz_2, "diameter": dims["d2"]}, {"coord_x": fastcordx_3, "coord_z": fastcordz_3, "diameter": dims["d2"]}, {"coord_x": fastcordx_4, "coord_z": fastcordz_4, "diameter": dims["d2"]}, {"coord_x": fastcordx_5, "coord_z": fastcordz_5, "diameter": dims["d2"]}, {"coord_x": fastcordx_6, "coord_z": fastcordz_6, "diameter": dims["d2"]}, {"coord_x": fastcordx_7, "coord_z": fastcordz_7, "diameter": dims["d2"]}, {"coord_x": fastcordx_8, "coord_z": fastcordz_8, "diameter": dims["d2"]}]
     TESTING_stress_allowable = matstress_allowable
-    #print("matstress", matstress_allowable)
     spacecraft_wall_thickness = 4E-3
 
     info_fastener = {"E": 113.8E9, "diameter": dims["d2"], "alpha": 8.6E-6, "Dfo": 0.00678, "Dfi": 0.004} # Fill in with actual values
     lug_E = lug_material["E"]
     alpha_clamped_part = lug_material["alpha"]
-    #alpha_clamped_part = 8.6E-6
 
 
-    def CG_calculator(fastener_details_list): # I changed it slightly to take in the data in another form, and into a function
+    def CG_calculator(fastener_details_list): 
         """Calculate area of each fastener"""
         #get area for each fastener this is now correct
         A_list = []
         for i in fastener_details_list:  #goes through every item in list 
-            r_fastener = i["diameter"]/2 #Changed this slightly. You can do this instead of range(len(d_list)) etc
+            r_fastener = i["diameter"]/2 
             A_fastener = pi*(r_fastener**2)   #until here correct
             A_list.append(A_fastener)
 
@@ -64,7 +62,7 @@ def bearingstress_everything(dims, lug_material, loads):
         #convert xi_list to float and put in array
         xi_listfloat = []
         for i in fastener_details_list:
-            xi = float(i["coord_x"]) # Made similar change here
+            xi = float(i["coord_x"]) 
             xi_listfloat.append(xi)
 
         xi_array = np.array(xi_listfloat)
@@ -103,19 +101,19 @@ def bearingstress_everything(dims, lug_material, loads):
 
         return (xcg, zcg)
 
-    """until here correct""" # Looks correct and makes sense to me -Kristian
+    """until here correct""" 
 
 
-    def calculate_equivalent_FM(forces_and_moments_dictionary, CG_coordinates): # Working on this one -Kristian
+    def calculate_equivalent_FM(forces_and_moments_dictionary, CG_coordinates): 
         #The forces in the x- and z-directions will just be the forces
         return { "F_cgx": forces_and_moments_dictionary["F_x"], "F_cgz": forces_and_moments_dictionary["F_z"], "M_cgy": forces_and_moments_dictionary["M_y"] + forces_and_moments_dictionary["F_x"] * (forces_and_moments_dictionary["coord_z"] - CG_coordinates[1])  - forces_and_moments_dictionary["F_z"] * (forces_and_moments_dictionary["coord_x"] - CG_coordinates[0])}
 
 
-    def in_plane_force(cg_forces_and_moments_dictionary, number_of_fasteners): # Working on this one -Kristian
+    def in_plane_force(cg_forces_and_moments_dictionary, number_of_fasteners): 
         return { "F_in_plane_x": cg_forces_and_moments_dictionary["F_cgx"] / number_of_fasteners, "F_in_plane_z": cg_forces_and_moments_dictionary["F_cgz"] / number_of_fasteners}
 
 
-    def in_plane_moment(M_cgy, all_fastener_details_list, CG_coordinates, current_fastener_number): # Working on this one -Kristian
+    def in_plane_moment(M_cgy, all_fastener_details_list, CG_coordinates, current_fastener_number): 
         sum_fastener_area_times_r_squared = 0
         for i in all_fastener_details_list:
             denominator_fastener_radius_squared = (i["coord_x"] - CG_coordinates[0]) ** 2 + (i["coord_z"] - CG_coordinates[1]) ** 2
@@ -181,7 +179,6 @@ def bearingstress_everything(dims, lug_material, loads):
 
     """" Calculations of Q_absorbed """
 
-    #Q_absorbed = alpha * J_s * A_i + alpha * J_a * A_i + epsilon * J_ir * A_i
 
     #for earth
     Q_absorbed_earth = absorb_alpha * J_searth * A_i + absorb_alpha * J_aearth * A_i + epsilon * J_irearth * A_i
@@ -198,14 +195,10 @@ def bearingstress_everything(dims, lug_material, loads):
         Q_absorbed_min = Q_absorbed_earth
 
     """ Calculations for min and max equilibrium temperature"""
-    #T = (Q_absorbed/(epsilon*sigma*A_e))^(1/4)
     #min equilibrium temperature
     T_eqmin = (Q_absorbed_min/(epsilon*sigma*A_e))**(1/4)
     #max equilibrium temperature
     T_eqmax = (Q_absorbed_max/ (epsilon*sigma*A_e))**(1/4)
-
-
-    # print(T_eqmin, "[K]" , T_eqmax, "[K]")
 
 
     temperatures = {"reference": 288.15, "min": T_eqmin, "max": T_eqmax} 
@@ -252,4 +245,3 @@ def bearingstress_everything(dims, lug_material, loads):
         TESTING_fastener_counter += 1
 
     return fastener_max_stress_list
-    # Disclaimer: I am absolutely horrible at coming up with variable names. Please feel free to change any of them to whatever actually makes sense... -Kristian
